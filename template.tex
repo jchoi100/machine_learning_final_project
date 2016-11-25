@@ -1,0 +1,126 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{hyperref} 
+\usepackage{color}
+\usepackage{enumerate}
+
+\oddsidemargin 0mm
+\evensidemargin 5mm
+\topmargin -20mm
+\textheight 240mm
+\textwidth 160mm
+
+\parskip 12pt 
+\setlength{\parindent}{0in}
+
+\pagestyle{myheadings} 
+
+\title{Exploring the SVM-KNN with Vision Problems}
+
+\author{Joon Hyuck Choi (jchoi100, jchoi100@jhu.edu)\\Joo Chang Lee (jlee381, jlee381@jhu.edu)}
+\date{November 20, 2016}
+
+\begin{document}
+\maketitle
+
+\section{Abstract}
+% Clearly explain your idea.
+The k-Nearest Neighbor (KNN) algorithm is a non-parametric method used for classification and regression. In a previous homework assignment, we implemented the standard KNN classifier and one of its variants, the distance weighted KNN. We felt the need to take another step from this assignment and explore another type of the KNN algorithm, which is a bit more involved.
+
+The KNN variant that we explore in this work is the SVM-KNN, a KNN algorithm that makes use of a kernel multiclass SVM as a subprocedure. The nearest neighbor approach in visual recognition problems has proven to work well in the past [1]. However, despite its benefits, because the NN approach may suffer from high variation  due to finite sampling. The incorporation of an SVM can remedy this situation.
+
+Note that the two extreme cases of the SVM-KNN are the standard KNN for small K values and the regular SVM for $K = n$. The algorithm first attempts multiclass classification using the standard KNN with a unanimous voting scheme. When at least one vote is different, it turns to the kernel mutliclass SVM for prediction.
+
+Using a SVM can be effective in the neighborhood of a small number of examples and a small number of classes [1]. We aim towards testing this algorithm on two datasets: MNIST [3] and USPS [4]. Extended goals include testing the algorithm on the Caltech 101 [5] dataset, which consists of more sophisticated real world images with more labels.
+
+\section{Methods}
+% Explain the methods you will be using and why they are appropriate.
+
+First run our own standard KNN with unanimous voting. In case of disagreement, use the kernel SVM from scikitlearn with our own distance metric as input.  Implement on our own the kernel trick provided in [1] as necessary: 
+
+$$K(x,y)=<x,y>=\frac{1}{2}(<x,x>+<y,y>-<x-y,x-y>)=\frac{1}{2}(d(x,0)+d(y,0)-d(x,y))$$
+
+\newpage
+
+\textbf{Basic Algorithm [1]}
+
+For input instance,
+\begin{enumerate}[(1)]
+\item Compute distances of the instance to all training instances and pick $K$ nearest neighbors.
+\item If the $K$ neighbors have the same labels, the instance is labeled and terminate.\\
+\qquad Else, compute the pairwise distances between the $K$ neighbors.
+\item Convert the distance matrix to a kernel matrix and apply multiclass SVM.
+\item Use the resulting classifier to label the input instance.
+\end{enumerate}
+
+The KNN algorithm often suffers from the problem of high variance in the case of limited sampling. Therefore, SVMs might help alleviate the high variance problem although it might consume more computational time. However, given a small neighborhood of instances and a small number of classes, SVMs may give better performance than other types of classifiers.
+
+\section{Resources}
+% What resources will you use and how will you get them?
+
+\begin{enumerate}[(1)]
+\item \textbf{External Libraries:} SVM algorithm (e.g. scikitlearn [2])
+\item \textbf{Dataset:} MNIST, USPS, Caltech 101
+\item \textbf{Programming Language:} Python 2.7
+\end{enumerate}
+
+\section{Milestones}
+\subsection{Must achieve}
+
+\begin{enumerate}[(1)]
+\item Create SVM-KNN by using our own KNN (modify from previous homework assignment to fit our datasets) and incorporating scikitlearn's SVM.
+\item Write kernel trick function mentioned in the abstract above.
+\item Parse MNIST and USPS datasets to fit as input to our SVM-KNN implementation.
+\item Run SVM-KNN, KNN, and SVM on MNIST and USPS using $L_2$ distance function. (Try different $K$ values for SVM-KNN and KNN)
+\item Compare and analyze results from (4).
+\end{enumerate}
+
+\subsection{Expected to achieve}
+\begin{enumerate}[(1)]
+\item Use shape context instead of $L_2$ to compute distance matrix to feed to Kernel SVM when running SVM-KNN on MNIST.
+\item Use tangent distance instead of $L_2$  to compute distance matrix to feed to Kernel SVM when running SVM-KNN on USPS.
+\end{enumerate}
+
+\subsection{Would like to achieve}
+\begin{enumerate}[(1)]
+\item Experiment SVM-KNN on Caltech 101 dataset.
+\item Reasons Caltech 101 dataset is more involved:
+\subitem a) Caltech 101 consists of real world images instead of digits (MNIST, USPS). Color
+\subitem      (not gray-scale as in MNIST and USPS), pose, and lighting makes things more difficult.
+\subitem b) More sophisticated distance operations per [1].
+\subitem c) Tests on Caltech 101 requires tests on two different distance functions [1].
+\subitem d) More labels (101 of them) in Caltech 101.
+\end{enumerate}
+
+\section{Final Writeup}
+% What will appear in the final writeup.
+
+\begin{enumerate}[(1)]
+\item Motivation
+\item Datasets
+\item Algorithm
+\item Experiment
+\item Results
+\item Conclusion
+\end{enumerate}
+
+\section{Bibliography}
+% A list of the papers relevant to this project.
+\begin{enumerate}[(1)]
+\item  H. Zhang, A. Berg, M. Maire, and J. Malik. $''$SVM-KNN: Discriminative Nearest Neighbor Classification for Visual Category Recognition$''$, CVPR, 2006.
+
+\item http://scikit-learn.org/stable/modules/svm.html
+
+\item http://yann.lecun.com/exdb/mnist/
+
+\item https://www.otexts.org/1577
+
+\item https://www.vision.caltech.edu/Image\textunderscore Datasets/Caltech101/
+
+
+\end{enumerate}
+\end{document}

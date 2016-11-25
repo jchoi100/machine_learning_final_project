@@ -1,0 +1,3 @@
+1. Facial Recognition using AdaBoost
+2. Noise reduction in AdaBoost
+3. Various types of KNN (comparsion)

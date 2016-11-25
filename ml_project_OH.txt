@@ -1,0 +1,32 @@
+
+
+1. Can we use the dataset from class?
+    -> If not, where can we get some good data?
+
+2. Have an idea to work with different variants of KNN
+
+    1. Locally Adaptive KNN
+    2. Weight Adjusted KNN
+    3. Adaptive KNN
+    4. KNN with Shared Nearest Neighbors
+    5. KNN with K-Menas
+    6. Generalized KNN
+    7. Informative KNN
+    8. Bayesian KNN
+    9. SVM KNN
+    10. Density Based KNN 
+    11. Variable KNN
+    12. Class Based KNN
+    13. Discernibility KNN
+
+    --> Implement x of them by ourselves and compare
+        accuracy and running times of these algorithms.
+        (Including the two we implemented for homework.)
+
+    --> Anything else we can add on to this?
+
+    Good idea?
+
+3. How many of those should we implement?
+
+4. 
