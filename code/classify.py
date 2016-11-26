@@ -88,37 +88,37 @@ def train(train_set, train_labels, args):
     return predictor
 
 
-def write_predictions(predictor, test_set, true_labels, predictions_file):
+def write_predictions(predictor, test_set, predictions_file):
     try:
         with open(predictions_file, 'w') as writer:
-            for i in range(len(test_set)):
-                label = predictor.predict(test_set[i])
+            for instance in test_set:
+                label = predictor.predict(instance)
+                print label
                 writer.write(str(label))
                 writer.write('\n')
-                print(label, true_labels[i])
     except IOError:
         raise Exception("Exception while opening/writing file for writing predicted labels: " + predictions_file)
 
 
 def main():
     args = get_args()
-    mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JC)
+    mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JH)
 
     if args.mode.lower() == "train":
         # Load the training data.
 
         # Sampled dataset training.
-        train_set = []
-        train_labels = []
-        for i in range(0, 60000, 4):
-            train_set.append(mnist.data[i])
-            train_labels.append(mnist.target[i])
-        train_set = np.array(train_set)
-        train_labels = np.array(train_labels)
+        # train_set = []
+        # train_labels = []
+        # for i in range(0, 60000, 4):
+            # train_set.append(mnist.data[i])
+            # train_labels.append(mnist.target[i])
+        # train_set = np.array(train_set)
+        # train_labels = np.array(train_labels)
 
         # Full dataset training.
-        # train_set = mnist.data[:60000]
-        # train_labels = mnist.target[:60000]
+        train_set = mnist.data[:60000]
+        train_labels = mnist.target[:60000]
 
         # Train the model.
         predictor = train(train_set, train_labels, args)
@@ -155,7 +155,7 @@ def main():
         except pickle.PickleError:
             raise Exception("Exception while loading pickle.")
             
-        write_predictions(predictor, test_set, true_labels, args.predictions_file)
+        write_predictions(predictor, test_set, args.predictions_file)
     else:
         raise Exception("Unrecognized mode.")
 
