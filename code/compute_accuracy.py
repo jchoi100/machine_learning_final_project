@@ -18,7 +18,7 @@ predictions = open(predictions_file)
 
 # Load the real labels.
 true_labels = []
-for i in range(60000, len(mnist.data), 90):
+for i in range(60000, len(mnist.data)):
     true_labels.append(str(mnist.target[i]))
 
 predicted_labels = []

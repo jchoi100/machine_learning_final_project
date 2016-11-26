@@ -1,3 +1,52 @@
+python classify.py --mode train --algorithm svm_knn --knn 3 --model-file mnist.svm_knn.model 
+python classify.py --mode test --model-file mnist.svm_knn.model --predictions-file mnist.svm_knn.predictions
+python compute_accuracy.py mnist.svm_knn.predictions
+
+python classify.py --mode train --algorithm svm_knn --knn 5 --model-file mnist.svm_knn.model 
+python classify.py --mode test --model-file mnist.svm_knn.model --predictions-file mnist.svm_knn.predictions
+python compute_accuracy.py mnist.svm_knn.predictions
+
+python classify.py --mode train --algorithm svm_knn --knn 10 --model-file mnist.svm_knn.model 
+python classify.py --mode test --model-file mnist.svm_knn.model --predictions-file mnist.svm_knn.predictions
+python compute_accuracy.py mnist.svm_knn.predictions
+
 python classify.py --mode train --algorithm svm_knn --knn 30 --model-file mnist.svm_knn.model 
 python classify.py --mode test --model-file mnist.svm_knn.model --predictions-file mnist.svm_knn.predictions
 python compute_accuracy.py mnist.svm_knn.predictions
+
+python classify.py --mode train --algorithm svm_knn --knn 80 --model-file mnist.svm_knn.model 
+python classify.py --mode test --model-file mnist.svm_knn.model --predictions-file mnist.svm_knn.predictions
+python compute_accuracy.py mnist.svm_knn.predictions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+python classify.py --mode train --algorithm knn --knn 3 --model-file mnist.knn.model 
+python classify.py --mode test --model-file mnist.knn.model --predictions-file mnist.knn.predictions
+python compute_accuracy.py mnist.knn.predictions
+
+python classify.py --mode train --algorithm knn --knn 5 --model-file mnist.knn.model 
+python classify.py --mode test --model-file mnist.knn.model --predictions-file mnist.knn.predictions
+python compute_accuracy.py mnist.knn.predictions
+
+python classify.py --mode train --algorithm knn --knn 10 --model-file mnist.knn.model 
+python classify.py --mode test --model-file mnist.knn.model --predictions-file mnist.knn.predictions
+python compute_accuracy.py mnist.knn.predictions
+
+python classify.py --mode train --algorithm knn --knn 30 --model-file mnist.knn.model 
+python classify.py --mode test --model-file mnist.knn.model --predictions-file mnist.knn.predictions
+python compute_accuracy.py mnist.knn.predictions
+
+python classify.py --mode train --algorithm knn --knn 80 --model-file mnist.knn.model 
+python classify.py --mode test --model-file mnist.knn.model --predictions-file mnist.knn.predictions
+python compute_accuracy.py mnist.knn.predictions

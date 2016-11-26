@@ -7,10 +7,11 @@ from sklearn.svm import SVC
 """ HW3 """
 class KNN(Predictor):
 
-    def __init__(self, knn):
+    def __init__(self, knn, is_svm):
         self.K = knn
         self.train_set = []
         self.train_labels = []
+        self.is_svm = is_svm
 
     def train(self, train_set, train_labels):
         self.train_set = train_set
@@ -34,17 +35,16 @@ class KNN(Predictor):
                 votes[neighbor[0]] = -1
         votes = sorted(votes.items(), key=lambda tup: (tup[1], tup[0]))
 
-        if -votes[0][1] == self.K:
-            return votes[0][0]
+        if self.is_svm:
+            if -votes[0][1] == self.K:
+                return votes[0][0]
+            else:
+                clf = SVC(kernel='linear')
+                X = [x[2] for x in nearest_neighbors]
+                y = [x[0] for x in nearest_neighbors]
+                clf.fit(X, y)
+                return clf.predict([test_vector])[0]
         else:
-            clf = SVC(kernel='linear')
-            X = [x[2] for x in nearest_neighbors]
-            y = [x[0] for x in nearest_neighbors]
-            # print X
-            # print y
-            print votes
-            clf.fit(X, y)
-            return clf.predict([test_vector])[0]
-
+            return votes[0][0]
 
 

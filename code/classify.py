@@ -81,7 +81,9 @@ def check_args(args):
 
 def train(train_set, train_labels, args):
     if args.algorithm == "svm_knn":
-        predictor = KNN(args.knn)
+        predictor = KNN(args.knn, True)
+    elif args.algorithm == "knn":
+        predictor = KNN(args.knn, False)
     else:
         raise ValueError("Unsupported algorithm type: check your --algorithm argument.")
     predictor.train(train_set, train_labels)
@@ -93,7 +95,6 @@ def write_predictions(predictor, test_set, predictions_file):
         with open(predictions_file, 'w') as writer:
             for instance in test_set:
                 label = predictor.predict(instance)
-                print label
                 writer.write(str(label))
                 writer.write('\n')
     except IOError:
@@ -133,17 +134,18 @@ def main():
     elif args.mode.lower() == "test":
         # Load the test data.
 
-        test_set = []
-        true_labels = []
-        for i in range(60000, len(mnist.data), 90):
-            test_set.append(mnist.data[i])
-            true_labels.append(mnist.target[i])
-        test_set = np.array(test_set)
-        true_labels = np.array(true_labels)
+        # Sampled dataset testing.
+        # test_set = []
+        # true_labels = []
+        # for i in range(60000, len(mnist.data), 90):
+        #     test_set.append(mnist.data[i])
+        #     true_labels.append(mnist.target[i])
+        # test_set = np.array(test_set)
+        # true_labels = np.array(true_labels)
 
         # Full dataset testing.
-        # test_set = mnist.data[60000:]
-        # true_labels = mnist.target[60000:]
+        test_set = mnist.data[60000:]
+        true_labels = mnist.target[60000:]
         
         predictor = None
         # Load the model.
