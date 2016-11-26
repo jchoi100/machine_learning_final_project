@@ -1,0 +1,3 @@
+python classify.py --mode train --algorithm svm_knn --knn 30 --model-file mnist.svm_knn.model 
+python classify.py --mode test --model-file mnist.svm_knn.model --predictions-file mnist.svm_knn.predictions
+python compute_accuracy.py mnist.svm_knn.predictions
