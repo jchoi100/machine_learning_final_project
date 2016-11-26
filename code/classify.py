@@ -3,12 +3,12 @@ import argparse
 import sys
 import pickle
 
-# from cs475_types import ClassificationLabel, FeatureVector, Instance, Predictor
 from predictor_subclasses import *
 from sklearn.datasets import fetch_mldata
 import numpy as np
 
-CUSTOM_DATA_HOME = 'C:\Users\user01\Dropbox\School\Johns_Hopkins_University\Senior\FALL_2016\Intro_to_Machine_Learning_(EN.600.475)\project\code'
+CUSTOM_DATA_HOME_JH = 'C:\Users\user01\Dropbox\School\Johns_Hopkins_University\Senior\FALL_2016\Intro_to_Machine_Learning_(EN.600.475)\project\code'
+CUSTOM_DATA_HOME_JC = 'C:\Users\James\Desktop\FA16\Machine Learning\machine_learning_final_project\code'
 
 # def load_data(filename):
 #     instances = []
@@ -102,7 +102,7 @@ def write_predictions(predictor, test_set, true_labels, predictions_file):
 
 def main():
     args = get_args()
-    mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME)
+    mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JC)
 
     if args.mode.lower() == "train":
         # Load the training data.
@@ -110,7 +110,7 @@ def main():
         # Sampled dataset training.
         train_set = []
         train_labels = []
-        for i in range(0, len(mnist.data), 4):
+        for i in range(0, 60000, 4):
             train_set.append(mnist.data[i])
             train_labels.append(mnist.target[i])
         train_set = np.array(train_set)

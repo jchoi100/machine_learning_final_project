@@ -19,7 +19,7 @@ class KNN(Predictor):
         for i in range(len(self.train_set)):
             x_i = self.train_set[i]
             y_i = self.train_labels[i]
-            distance = euclidean(x_i, test_vector)
+            distance = euclidean(x_i / 255.0, test_vector / 255.0)
             neighbors.append((y_i, distance))
         neighbors = sorted(neighbors, key=lambda tup: (tup[1], tup[0]))
         nearest_neighbors = neighbors[0:self.K]
@@ -30,5 +30,4 @@ class KNN(Predictor):
             else:
                 votes[neighbor[0]] = -1
         votes = sorted(votes.items(), key=lambda tup: (tup[1], tup[0]))
-        print votes
         return votes[0][0]
