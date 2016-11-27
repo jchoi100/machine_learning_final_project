@@ -1,5 +1,5 @@
 
-=========================MNIST SVM_KNN================================
+============================MNIST SVM_KNN============================
 
 python classify.py --mode train --algorithm svm_knn --knn 3 --model-file mnist.svm_knn.model 
 python classify.py --mode test --model-file mnist.svm_knn.model --predictions-file mnist.svm_knn.predictions
@@ -22,7 +22,7 @@ python classify.py --mode test --model-file mnist.svm_knn.model --predictions-fi
 python compute_accuracy.py mnist.svm_knn.predictions
 
 
-==========================MNIST KNN==================================
+============================MNIST KNN============================
 
 
 python classify.py --mode train --algorithm knn --knn 3 --model-file mnist.knn.model 
@@ -46,7 +46,7 @@ python classify.py --mode test --model-file mnist.knn.model --predictions-file m
 python compute_accuracy.py mnist.knn.predictions
 
 
-=======================MNIST DISTANCE KNN============================
+============================MNIST DISTANCE KNN============================
 
 python classify.py --mode train --algorithm distance_knn --knn 80 --model-file mnist.distance_knn.model 
 python classify.py --mode test --model-file mnist.distance_knn.model --predictions-file mnist.distance_knn.predictions
@@ -55,7 +55,7 @@ python compute_accuracy.py mnist.distance_knn.predictions
 
 
 
-=====================USPS SVM_KNN============================
+============================USPS SVM_KNN============================
 
 python classify.py --data usps --mode train --algorithm svm_knn --knn 3 --model-file usps.svm_knn.model --train-dataset zip.train
 python classify.py --data usps --mode test --model-file usps.svm_knn.model --predictions-file usps.svm_knn.predictions --test-dataset zip.test
@@ -80,7 +80,7 @@ python compute_accuracy_usps.py zip.test usps.svm_knn.predictions
 
 
 
-=====================USPS KNN============================
+============================USPS KNN============================
 
 python classify.py --data usps --mode train --algorithm knn --knn 3 --model-file usps.knn.model --train-dataset zip.train
 python classify.py --data usps --mode test --model-file usps.knn.model --predictions-file usps.knn.predictions --test-dataset zip.test
