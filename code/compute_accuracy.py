@@ -4,8 +4,10 @@ from sklearn.datasets import fetch_mldata
 CUSTOM_DATA_HOME_JW = '/Users/home/Desktop/machine_learning_final_project/code'
 CUSTOM_DATA_HOME_JH = 'C:\Users\user01\Dropbox\School\Johns_Hopkins_University\Senior\FALL_2016\Intro_to_Machine_Learning_(EN.600.475)\project\code'
 CUSTOM_DATA_HOME_JC = 'C:\Users\James\Desktop\FA16\Machine Learning\machine_learning_final_project\code'
+CUSTOM_DATA_HOME_JH_UGRAD = '/home/jchoi100/Desktop/machine_learning_final_project/code'
+CUSTOM_DATA_HOME_JC_UGRAD = '/home/jlee381/machine_learning_final_project/code'
 
-mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JW)
+mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JH_UGRAD)
 
 if len(sys.argv) != 2:
     print 'usage: %s data predictions' % sys.argv[0]
