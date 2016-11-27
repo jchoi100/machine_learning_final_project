@@ -50,3 +50,11 @@ python compute_accuracy.py mnist.knn.predictions
 python classify.py --mode train --algorithm knn --knn 80 --model-file mnist.knn.model 
 python classify.py --mode test --model-file mnist.knn.model --predictions-file mnist.knn.predictions
 python compute_accuracy.py mnist.knn.predictions
+
+
+
+
+
+python classify.py --mode train --algorithm distance_knn --knn 3 --model-file mnist.distance_knn.model 
+python classify.py --mode test --model-file mnist.distance_knn.model --predictions-file mnist.distance_knn.predictions
+python compute_accuracy.py mnist.distance_knn.predictions

@@ -1,0 +1,12 @@
+16.11.26
+
+For reduced dataset,
+1. For small values of K, standard KNN worked well.
+
+2. But for SVM-KNN, small values of K showed poor results.
+   With greater K values, when there was a diagreement
+   amongst the votes (i.e. unanimous voting failed), the
+   SVM was able to catch mistakes that the standard KNN
+   would have made anyway. For instance, if the true label
+   was supposed to be 8 but the votes said that 4 was most
+   likely, SVM outputted 8 nonetheless.

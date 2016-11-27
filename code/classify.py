@@ -84,6 +84,8 @@ def train(train_set, train_labels, args):
         predictor = KNN(args.knn, True)
     elif args.algorithm == "knn":
         predictor = KNN(args.knn, False)
+    elif args.algorithm == "distance_knn":
+        predictor = KNN(args.knn, False, True)
     else:
         raise ValueError("Unsupported algorithm type: check your --algorithm argument.")
     predictor.train(train_set, train_labels)
@@ -109,17 +111,17 @@ def main():
         # Load the training data.
 
         # Sampled dataset training.
-        # train_set = []
-        # train_labels = []
-        # for i in range(0, 60000, 4):
-            # train_set.append(mnist.data[i])
-            # train_labels.append(mnist.target[i])
-        # train_set = np.array(train_set)
-        # train_labels = np.array(train_labels)
+        train_set = []
+        train_labels = []
+        for i in range(0, 60000, 4):
+            train_set.append(mnist.data[i])
+            train_labels.append(mnist.target[i])
+        train_set = np.array(train_set)
+        train_labels = np.array(train_labels)
 
         # Full dataset training.
-        train_set = mnist.data[:60000]
-        train_labels = mnist.target[:60000]
+        # train_set = mnist.data[:60000]
+        # train_labels = mnist.target[:60000]
 
         # Train the model.
         predictor = train(train_set, train_labels, args)
@@ -135,17 +137,17 @@ def main():
         # Load the test data.
 
         # Sampled dataset testing.
-        # test_set = []
+        test_set = []
         # true_labels = []
-        # for i in range(60000, len(mnist.data), 90):
-        #     test_set.append(mnist.data[i])
-        #     true_labels.append(mnist.target[i])
-        # test_set = np.array(test_set)
+        for i in range(60000, len(mnist.data), 90):
+            test_set.append(mnist.data[i])
+            # true_labels.append(mnist.target[i])
+        test_set = np.array(test_set)
         # true_labels = np.array(true_labels)
 
         # Full dataset testing.
-        test_set = mnist.data[60000:]
-        true_labels = mnist.target[60000:]
+        # test_set = mnist.data[60000:]
+        # true_labels = mnist.target[60000:]
         
         predictor = None
         # Load the model.
