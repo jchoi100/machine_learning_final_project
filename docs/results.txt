@@ -1,5 +1,13 @@
-Full dataset
+MNIST Full dataset
 
 svm_knn:
 k=30 -> 0.9815 (9815/10000)
 k=80 -> 0.9831 (9831/10000)
+
+
+
+
+USPS Full dataset
+
+knn:
+k=3 -> 0.944694 (1896/2007)

@@ -10,3 +10,10 @@ For reduced dataset,
    would have made anyway. For instance, if the true label
    was supposed to be 8 but the votes said that 4 was most
    likely, SVM outputted 8 nonetheless.
+
+
+16.11.27
+
+On USPS dataset,
+1. Normalizing values with range [-1,1] to [0,1] did not
+   make a difference.
