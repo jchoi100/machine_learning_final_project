@@ -42,7 +42,6 @@ class KNN(Predictor):
                 else:
                     votes[neighbor[0]] = -1
             votes = sorted(votes.items(), key=lambda tup: (tup[1], tup[0]))
-
             if self.is_svm:
                 if -votes[0][1] == self.K:
                     return votes[0][0]
