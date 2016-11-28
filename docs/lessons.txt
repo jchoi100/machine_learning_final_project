@@ -1,4 +1,4 @@
-16.11.26
+16.11.25
 
 For reduced dataset,
 1. For small values of K, standard KNN worked well.
@@ -12,8 +12,21 @@ For reduced dataset,
    likely, SVM outputted 8 nonetheless.
 
 
-16.11.27
+16.11.26
 
 On USPS dataset,
 1. Normalizing values with range [-1,1] to [0,1] did not
    make a difference.
+
+
+16.11.27
+
+On USPS dataset,
+1. SVM KNN performance improves then does bad.
+    Reason: k = 30, 80 not suitable because n=7000.
+    --> fetches data points that are maybe too far away.
+    --> Paper uses K=10 in fact.
+
+    ==> Maybe we should try 3 <= K <= 10 more values in 
+        this range?
+
