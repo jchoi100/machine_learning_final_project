@@ -30,3 +30,13 @@ On USPS dataset,
     ==> Maybe we should try 3 <= K <= 10 more values in 
         this range?
 
+2. The reason we use this hybrid is to improve accuracy.
+   We see that at certain K, possibily proportionate to 
+   the number of samples, SVM KNN may achieve an the best
+   accuracy better than that of KNN. (Pyramid because for
+   too small or too large values of K, accuracy drops.)
+
+   Take MNIST: about 60,000 data points, K = 80
+   Take USPS : about  7,000 data points, K = 10
+    --> approimately proportionate!!!
+
