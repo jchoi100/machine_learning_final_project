@@ -7,7 +7,7 @@ CUSTOM_DATA_HOME_JC = 'C:\Users\James\Desktop\FA16\Machine Learning\machine_lear
 CUSTOM_DATA_HOME_JH_UGRAD = '/home/jchoi100/Desktop/machine_learning_final_project/code'
 CUSTOM_DATA_HOME_JC_UGRAD = '/home/jlee381/machine_learning_final_project/code'
 
-mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JC_UGRAD)
+mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JH_UGRAD)
 
 if len(sys.argv) != 2:
     print 'usage: %s data predictions' % sys.argv[0]
