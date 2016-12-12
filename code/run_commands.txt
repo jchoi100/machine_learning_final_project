@@ -91,9 +91,9 @@ python classify.py --data usps --mode test --model-file usps.svm_knn1.model --pr
 python compute_accuracy_usps.py mldata/zip.test usps.svm_knn1.predictions
 
 
-python classify.py --data usps --mode train --algorithm svm_knn --knn 3 --model-file usps.svm_knn3.model --train-dataset zip.train
-python classify.py --data usps --mode test --model-file usps.svm_knn3.model --predictions-file usps.svm_knn3.predictions --test-dataset zip.test
-python compute_accuracy_usps.py zip.test usps.svm_knn3.predictions
+python classify.py --data usps --mode train --algorithm svm_knn --knn 3 --model-file usps.svm_knn3.model --train-dataset mldata/zip.train
+python classify.py --data usps --mode test --model-file usps.svm_knn3.model --predictions-file usps.svm_knn3.predictions --test-dataset mldata/zip.test
+python compute_accuracy_usps.py mldata/zip.test usps.svm_knn3.predictions
 
 
 python classify.py --data usps --mode train --algorithm svm_knn --knn 5 --model-file usps.svm_knn5.model --train-dataset mldata/zip.train
@@ -101,9 +101,9 @@ python classify.py --data usps --mode test --model-file usps.svm_knn5.model --pr
 python compute_accuracy_usps.py mldata/zip.test usps.svm_knn5.predictions
 
 
-python classify.py --data usps --mode train --algorithm svm_knn --knn 10 --model-file usps.svm_knn10.model --train-dataset zip.train
-python classify.py --data usps --mode test --model-file usps.svm_knn10.model --predictions-file usps.svm_knn10.predictions --test-dataset zip.test
-python compute_accuracy_usps.py zip.test usps.svm_knn10.predictions
+python classify.py --data usps --mode train --algorithm svm_knn --knn 10 --model-file usps.svm_knn10.model --train-dataset mldata/zip.train
+python classify.py --data usps --mode test --model-file usps.svm_knn10.model --predictions-file usps.svm_knn10.predictions --test-dataset mldata/zip.test
+python compute_accuracy_usps.py mldata/zip.test usps.svm_knn10.predictions
 
 
 python classify.py --data usps --mode train --algorithm svm_knn --knn 30 --model-file usps.svm_knn30.model --train-dataset mldata/zip.train
@@ -111,9 +111,9 @@ python classify.py --data usps --mode test --model-file usps.svm_knn30.model --p
 python compute_accuracy_usps.py mldata/zip.test usps.svm_knn30.predictions
 
 
-python classify.py --data usps --mode train --algorithm svm_knn --knn 80 --model-file usps.svm_knn80.model --train-dataset zip.train
-python classify.py --data usps --mode test --model-file usps.svm_knn80.model --predictions-file usps.svm_knn80.predictions --test-dataset zip.test
-python compute_accuracy_usps.py zip.test usps.svm_knn80.predictions
+python classify.py --data usps --mode train --algorithm svm_knn --knn 80 --model-file usps.svm_knn80.model --train-dataset mldata/zip.train
+python classify.py --data usps --mode test --model-file usps.svm_knn80.model --predictions-file usps.svm_knn80.predictions --test-dataset mldata/zip.test
+python compute_accuracy_usps.py mldata/zip.test usps.svm_knn80.predictions
 
 
 

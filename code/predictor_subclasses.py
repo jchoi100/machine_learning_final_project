@@ -34,6 +34,7 @@ class KNN(Predictor):
         self.train_labels = train_labels
 
     def predict(self, test_vector):
+        # Get K_sl neighbors.
         neighbors = []
         for i in range(len(self.train_set)):
             x_i = self.train_set[i]
@@ -41,8 +42,16 @@ class KNN(Predictor):
             distance = euclidean(x_i / 255.0, test_vector / 255.0)
             neighbors.append((y_i, distance, x_i))
         neighbors = sorted(neighbors, key=lambda tup: (tup[1], tup[0]))
-        nearest_neighbors = neighbors[0:self.K]
+        nearest_neighbors_temp = neighbors[0:self.K * 10]
 
+        # Get K neighbors using tangent distance.
+        nearest_neighbors = []
+        for neighbor in nearest_neighbors_temp:
+            nearest_neighbors.append((y_i, tangentDistance(test_vector, neighbor[2], 16, 16, np.ones(7)), neighbor[2]))
+        nearest_neighbors = sorted(nearest_neighbors, key=lambda tup: (tup[1], tup[0]))
+        nearest_neighbors = nearest_neighbors[0:self.K]
+
+        # Run KNN then SVM if necessary.
         votes = {}
         if self.is_weighted:
             for neighbor in nearest_neighbors:
