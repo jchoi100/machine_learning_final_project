@@ -54,17 +54,17 @@ However, because we are given a limited amount of sample data, the nearest neigh
 
 For this project, we mainly used two datasets: MNIST and USPS, both of which are datasets of handwritten digits.
 
-\subsection{MNIST \footnote{http://yann.lecun.com/exdb/mnist/}}
+\subsection{MNIST}
 
-MNIST (Mixed National Institute of Standards and Technology database) is a database of handwritten digits commonly used for training image processing systems. The dataset was created by mixing and normalizing the samples from NIST's original datasets. The dataset contains 60,000 training images and 10,000 testing images. Each image is of size 28x28. Currently, the state of the art Convolutional Neural Network approach achieves an error rate of 0.21$\%$ on this dataset [6].
+MNIST \footnote{http://yann.lecun.com/exdb/mnist/} (Mixed National Institute of Standards and Technology database) is a database of handwritten digits commonly used for training image processing systems. The dataset was created by mixing and normalizing the samples from NIST's original datasets. The dataset contains 60,000 training images and 10,000 testing images. Each image is of size 28x28. Currently, the state of the art Convolutional Neural Network approach achieves an error rate of 0.21$\%$ on this dataset [6].
 
-\subsection{USPS \footnote{https://www.otexts.org/1577}}
+\subsection{USPS}
 
-The USPS dataset is a dataset of handwritten digits with 7,291 training images and 2,007 testing images. The dataset was obtained from the scanning of handwritten digits from envelopes by the U.S. Postal Service. The images in this dataset have been deslanted and size normalized from the original images. Each image is 16x16 grayscale.
+The USPS dataset constructed in [9] is a dataset of handwritten digits with 7,291 training images and 2,007 testing images. The dataset was obtained from the scanning of handwritten digits from envelopes by the U.S. Postal Service. The images in this dataset have been deslanted and size normalized from the original images. Each image is 16x16 grayscale.
 
-\section{SVM-KNN Algorithm [1]}
+\section{SVM-KNN Algorithm}
 
-In this section, we describe the SVM-KNN algorithm. Then we give short overviews of the SVM and KNN algorithms respectively.\\
+In this section, we describe the SVM-KNN algorithm proposed by the authors in [1]. Then we give short overviews of the SVM and KNN algorithms.\\
 
 For input instance $x$,
 \begin{enumerate}[(1)]
@@ -234,7 +234,7 @@ Text
 
 \section{Conclusion}
 
-In this project, we explored the SVM-KNN algorithm on several datasets and compared the results with the standard KNN algorithm. We experimented th SVM-KNN and KNN on the MNIST and USPS datasets of handwritten digits on various $K$ values and sample sizes. We conlcude that the standard KNN algorithm performs worse with increasing values of $K$ while the SVM-KNN shows a pyramid-ing behavior with increasing values of $K$. The incorporation of the SVM into the standard KNN algorithm as a subpattern improves the speed and accuracy in visual object recognition tasks for handwritten digit images. Future work needs to explore more on this algorithm's effectiveness on more complex image datasets such as the Caltech 101, Caltech 256, and ImageNet.
+In this project, we explored the SVM-KNN algorithm on several datasets and compared the results with the standard KNN algorithm. We experimented th SVM-KNN and KNN on the MNIST and USPS datasets of handwritten digits on various $K$ values and sample sizes. We conlcude that the standard KNN algorithm performs worse with increasing values of $K$ while the SVM-KNN shows a pyramid-ing behavior with increasing values of $K$. The incorporation of the SVM into the standard KNN algorithm as a subpattern improves the speed and accuracy in visual object recognition tasks for handwritten digit images. Future work needs to explore more on this algorithm's effectiveness on more complex image datasets such as the Caltech 101 [3], Caltech 256 [8], and ImageNet \footnote{http://image-net.org/index}.
 
 \section{Comparison to Proposal}
 
@@ -250,15 +250,15 @@ In this project, we explored the SVM-KNN algorithm on several datasets and compa
 
 \subsection{Expected to Achieve}
 \begin{itemize}
-\item Use shape contextinstead of $L_2$ to compute distance matrix to feed to Kernel SVM when running SVM-KNN on MNIST. 
+\item Use shape context instead of $L_2$ to compute distance matrix to feed to Kernel SVM when running SVM-KNN on MNIST. $\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Not Done)}
 
 \textit{(We were not able to complete this portion because the computations involved were intractable. The authors of the original paper proposed scaling up the input image size from 28x28 to 70x70 on a dataset of 60,000 training images and 10,000 test images.)}
-\item Use tangent distance instead of $L_2$ to compute distance matrix to feed to Kernel SVM when running SVM-KNN on USPS.
+\item Use tangent distance instead of $L_2$ to compute distance matrix to feed to Kernel SVM in running SVM-KNN on USPS. $\>\>\>\>\>\>\>\>$\textbf{(Partially Done)}
 \end{itemize}
 
 \subsection{Would Like to Achieve}
 \begin{itemize}
-\item Experiment SVM-KNN on Caltech 101 [3]. 
+\item Experiment SVM-KNN on Caltech 101. 
 
 \textit{(We were not able to XXXXXXXXXXXX)}
 \end{itemize}
@@ -266,7 +266,7 @@ In this project, we explored the SVM-KNN algorithm on several datasets and compa
 \subsection{Extra Work Not Mentioned in Proposal}
 
 \begin{itemize}
-\item Text
+\item Experiment with RBF kernel on SVM-KNN with MNIST dataset. Use various $K$ values when experimenting. Approach in [7]. $\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Done)}
 
 \end{itemize}
 
@@ -315,6 +315,17 @@ Categories}.
 \newblock {\em Fast and Accurate Digit Classification}.
 \newblock EECS Department, University of California, Berkeley, Tech. Rep. UCB/EECS-2009-159.
 
+\bibitem[\protect\citename{Griffin, Holub, Perona}2007]{Griffin, Holub, Perona: 2007}
+8. Gregory Griffin, Alex Holub, Pietro Perona.
+\newblock 2007.
+\newblock {\em Caltech-256 Object Category Dataset}.
+\newblock (Unpublished).
+
+\bibitem[\protect\citename{LeCun, Boser, Denker, Henderson, Howard, Hubbard, Jackel}1990]{LeCun, Boser, Denker, Henderson, Howard, Hubbard, Jackel: 1990}
+9. Y LeCun, B Boser, JS Denker, D Henderson, RE Howard, W Hubbard, LD Jackel.
+\newblock 1990.
+\newblock {\em Handwritten Digit Recognition with a Back-Propagation Network}.
+\newblock Advances in neural information processing systems 2, NIPS 1989.
 
 \end{thebibliography}
 
