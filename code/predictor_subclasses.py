@@ -3,6 +3,22 @@ from math import sqrt
 from scipy.spatial.distance import euclidean
 import numpy as np
 from sklearn.svm import SVC
+from td import tangentDistance
+
+def td_kernel(X, Y):
+    """
+    """
+    r1, c1 = X.shape
+    r2, c2 = Y.shape
+    zeros = np.zeros(c1)
+    choice = np.ones(7)
+    matrix = np.zeros((r1, r2))
+    for r in range(r1):
+        for c in range(r2):
+            matrix[r][c] = 0.5 * (tangentDistance(X[r], zeros, 16, 16, choice)\
+                                  + tangentDistance(Y[c], zeros, 16, 16, choice)\
+                                  - tangentDistance(X[r], Y[c], 16, 16, choice))
+    return matrix
 
 class KNN(Predictor):
 
@@ -46,9 +62,10 @@ class KNN(Predictor):
                 if -votes[0][1] == self.K:
                     return votes[0][0]
                 else:
-                    clf = SVC(kernel='rbf')
+                    clf = SVC(kernel=td_kernel)
                     X = [x[2] for x in nearest_neighbors]
                     y = [x[0] for x in nearest_neighbors]
                     clf.fit(X, y)
+                    print("!")
                     return clf.predict([test_vector])[0]
         return votes[0][0]

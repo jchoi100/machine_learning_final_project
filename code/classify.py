@@ -112,7 +112,7 @@ def main():
 
     if args.data == "mnist":
 
-        mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JC)
+        mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JH)
 
         if args.mode.lower() == "train":
             # Load the training data.
