@@ -47,9 +47,12 @@ class KNN(Predictor):
         # Get K neighbors using tangent distance.
         nearest_neighbors = []
         for neighbor in nearest_neighbors_temp:
-            nearest_neighbors.append((y_i, tangentDistance(test_vector, neighbor[2], 16, 16, np.ones(7)), neighbor[2]))
+            nearest_neighbors.append((neighbor[0], tangentDistance(test_vector, neighbor[2], 16, 16, np.ones(7)), neighbor[2]))
         nearest_neighbors = sorted(nearest_neighbors, key=lambda tup: (tup[1], tup[0]))
         nearest_neighbors = nearest_neighbors[0:self.K]
+
+        for i in nearest_neighbors:
+            print i[0]
 
         # Run KNN then SVM if necessary.
         votes = {}
