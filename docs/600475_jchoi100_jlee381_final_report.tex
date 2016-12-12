@@ -7,6 +7,8 @@
 \usepackage{naaclhlt2010}
 \usepackage{times}
 \usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{graphicx}
 \setlength\titlebox{6.5cm}    % Expanding the titlebox
 
 \title{Exploring the SVM-KNN with Vision Problems}
@@ -23,308 +25,279 @@
   Baltimore, MD 21218, USA\\
   {\tt jlee381@jhu.edu}}
 
-\date{Dec X, 2016}
+\date{Dec 10, 2016}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-  This document contains the instructions for preparing a camera-ready
-  manuscript for the proceedings of NAACL HLT 2010. The document itself conforms
-  to its own specifications, and is therefore an example of what
-  your manuscript should look like.  Authors are asked to conform to
-  all the directions reported in this document.
+The k-Nearest Neighbor (KNN) algorithm is a non-parametric method used for classification and regression. In a previous assignment, we implemented the KNN classifier and one of its variants, the distance weighted KNN. We felt the need to take another step from this assignment and explore another type of the KNN algorithm, which is more involved.
+
+The KNN variant that we explore in this work is the SVM-KNN, a KNN algorithm that makes use of a kernel multiclass support vector machine (SVM) as a subprocedure. The nearest neighbor approach in visual recognition problems has proven to work well in the past. However, despite its benefits, the nearest neighbor approach may suffer from high variation due to finite sampling. The incorporation of an SVM can remedy this situation. The SVM-KNN algorithm attempts to use the standard KNN algorithm with a unanimous voting scheme and then turns to a multiclass SVM if a unanimous agreement was not achieved.
+
+Using an SVM can be effective in the neighborhood of a small number of examples and a small number of classes. We tested this algorithm and compared the performance with the standard KNN on two datasets: MNIST and USPS. We also tested for various values of $K$ on both the KNN and SVM-KNN algorithms.
+
 \end{abstract}
 
 \section{Introduction}
 
-The following instructions are directed to authors of papers accepted
-for publication in the NAACL HLT 2010 proceedings.  All authors are required
-to adhere to these specifications. Authors are required to provide 
-a Portable Document Format (PDF) version of
-their papers.  The proceedings will be printed on US-Letter paper.
-Authors from countries in which access to word-processing systems is
-limited should contact the publication chairs as soon as possible.
+Dynamics in college classrooms have changed drastically in the past decade. Just about ten years ago, rarely did students open their laptops in lecture to take notes$-$rarely did professors allow students to open their computers in class. Today, most students take notes using their laptops. Reasons range from the fact that many students these days have bad penmanship, they are used to typing on their computers, or electronic archives are easier to refer to in the future. However, some students still take notes using pen and paper because they can easily draw figures presented in class and get less distracted on their computers. Nevertheless, it is convenient to have electronic notes. As a result, we became interested in exploring optical character recognition (OCR). We chose to focus on one of the most basic problems in OCR: handwritten digit recognition.
 
+\section{Background}
 
-\section{General Instructions}
+Performance on visual category recognition has improved by great amounts in the past decade. However, many algorithms are still far from reaching human level performance or are too slow to train. From positive results that past works in the literature have acheived in visual category recognition including the USPS zip code dataset by [5] and shape context based distance on the MNIST dataset [2], the authors of the original paper [1] concluded that exploring other approaches using the nearest neighbhor algorithm could yield fast and accurate results.
 
-Manuscripts must be in two-column format.  Exceptions to the
-two-column format include the title, authors' names and complete
-addresses, which must be centered at the top of the first page (see
-the guidelines in Subsection~\ref{ssec:first}), and any full-width
-figures or tables .  Type single-spaced.  Do not number the pages.
-Start all pages directly under the top margin.  See the guidelines
-later regarding formatting the first page.
+The motivations behind using the nearest neighbor approach in visual cateogry recognition are as follow. First, the nearest neighbor approach does not require the explicit construction of a feature space. Second, the nearest neighbor algorithm solves a multiclass classification naturally. Third, as the sample size grows large, the error rate of a nearest neighbor algorithm grows very low.
 
-%% If the paper is produced by a printer, make sure that the quality
-%% of the output is dark enough to photocopy well.  It may be necessary
-%% to have your laser printer adjusted for this purpose.  Papers that are too
-%% faint to reproduce well may not be included.
+However, because we are given a limited amount of sample data, the nearest neighbhor algorithm may suffer from high variation. The incorporation of an SVM mitigates this problem. First, the SVM allows for the use of various distance functions. Second, with the finite neighborhood passed by the KNN classifier as input, an SVM trains faster and performs multiclass classification more naturally than it would when given the entire dataset as input. Lastly, the authors of the original paper note that the motivation also came from human pyschophysics. Humans first perform quick coarse categorization and then perform more accurate and slower discrimination with time when performing visual recognition tasks. The KNN works as the preliminary pruning process, and the SVM performs the fine discrimination stage.
 
-%% {\bf Do not print page numbers on the manuscript.}  Write them lightly
-%% on the back of each page in the upper left corner along with the
-%% (first) author's name.
+\section{Datasets}
 
-The maximum length of a manuscript is eight (8) pages for the main
-conference, printed single-sided, plus one (1) page for references
-(see Section~\ref{sec:length} for additional information on the
-maximum number of pages).  Do not number the pages.
+For this project, we mainly used two datasets: MNIST and USPS, both of which are datasets of handwritten digits.
 
-\subsection{Electronically-available resources}
+\subsection{MNIST \footnote{http://yann.lecun.com/exdb/mnist/}}
 
-NAACL HLT provides this description in \LaTeX2e{} ({\tt naaclhlt2010.tex}) and PDF
-format ({\tt naaclhlt2010.pdf}), along with the \LaTeX2e{} style file used to
-format it ({\tt naaclhlt2010.sty}) and an ACL bibliography style ({\tt naaclhlt2010.bst}).
-These files are all available at
-{\tt http://naaclhlt2010.isi.edu}.  A Microsoft Word
-template file ({\tt naaclhlt2010.dot}) is also available at the same URL. We
-strongly recommend the use of these style files, which have been
-appropriately tailored for the NAACL HLT 2010 proceedings.
+MNIST (Mixed National Institute of Standards and Technology database) is a database of handwritten digits commonly used for training image processing systems. The dataset was created by mixing and normalizing the samples from NIST's original datasets. The dataset contains 60,000 training images and 10,000 testing images. Each image is of size 28x28. Currently, the state of the art Convolutional Neural Network approach achieves an error rate of 0.21$\%$ on this dataset.
 
+\subsection{USPS \footnote{https://www.otexts.org/1577}}
 
-\subsection{Format of Electronic Manuscript}
-\label{sect:pdf}
+The USPS dataset is a dataset of handwritten digits with 7,291 training images and 2,007 testing images. The dataset was obtained from the scanning of handwritten digits from envelopes by the U.S. Postal Service. The images in this dataset have been deslanted and size normalized from the original images. Each image is 16x16 grayscale.
 
-For the production of the electronic manuscript you must use Adobe's
-Portable Document Format (PDF). This format can be generated from
-postscript files: on Unix systems, you can use {\tt ps2pdf} for this
-purpose; under Microsoft Windows, you can use Adobe's Distiller, or
-if you have cygwin installed, you can use {\tt dvipdf} or
-{\tt ps2pdf}.  Note 
-that some word processing programs generate PDF which may not include
-all the necessary fonts (esp. tree diagrams, symbols). When you print
-or create the PDF file, there is usually an option in your printer
-setup to include none, all or just non-standard fonts.  Please make
-sure that you select the option of including ALL the fonts.  {\em
-  Before sending it, test your {\/\em PDF} by printing it from a
-  computer different from the one where it was created}. Moreover,
-some word processor may generate very large postscript/PDF files,
-where each page is rendered as an image. Such images may reproduce
-poorly.  In this case, try alternative ways to obtain the postscript
-and/or PDF.  One way on some systems is to install a driver for a
-postscript printer, send your document to the printer specifying
-``Output to a file'', then convert the file to PDF.
+\section{SVM-KNN Algorithm [1]}
 
-For reasons of uniformity, Adobe's {\bf Times Roman} font should be
-used. In \LaTeX2e{} this is accomplished by putting
+In this section, we describe the SVM-KNN algorithm. Then we give short overviews of the SVM and KNN algorithms respectively.\\
 
-\begin{quote}
-\begin{verbatim}
-\usepackage{times}
-\usepackage{latexsym}
-\end{verbatim}
-\end{quote}
-in the preamble.
+For input instance $x$,
+\begin{enumerate}[(1)]
+\item Compute distances of $x$ to all training instances and pick $K$ nearest neighbors.
+\item If the $K$ neighbors have the same labels, $x$ is labeled and terminate.\\
+\qquad Else, compute the pairwise distances between the $K$ neighbors.
+\item Convert the distance matrix to a kernel matrix and apply multiclass SVM.
+\item Use resulting classifier to label $x$.
+\end{enumerate}
 
-Additionally, it is of utmost importance to specify the {\bf
-  US-Letter format} (8.5in $\times$ 11in) when formatting the paper.
-When working with {\tt dvips}, for instance, one should specify {\tt
-  -t letter}.
+\subsection{Support Vector Machine (SVM)}
 
-Print-outs of the PDF file on US-Letter paper should be identical to the
-hardcopy version.  If you cannot meet the above requirements about the
-production of your electronic submission, please contact the
-publication chairs above  as soon as possible.
+Support vector machines are supervised learning models used for classification and regression analysis. Given a set of training instances, each with a corresponding label, an SVM builds a machine learning model that assigns new instances to one category or the other. An SVM is a non-probabilistic classifier. It is a representation of the instances in space, mapped so that the instances of different classes are divided by a gap that is as wide as it can be (max-margin principle). A new instance is mapped into the space and predicted to belong to a class based on the side of the boundary that it falls into. An SVM also allows for non-linear classification with the help of the kernel trick, which implicitly maps inputs into high-dimensional feature spaces. 
 
+\subsection{K-Nearest Neighbors (KNN)}
 
-\subsection{Layout}
-\label{ssec:layout}
+The K-Nearest Neighbhors Algorithm is a machine learning method used for classification and regression. The input consists of the $K$ nearest training instances in the feature space. In a classification task, the output is a prediction of the class of the given input. The KNN algorithm decides on this prediction by using a majority vote of the input instance's neighbors. The input instance is assigned the label of the class most common among its $K$ neighbors.
 
-Format manuscripts two columns to a page, in the manner these
-instructions are formatted. The exact dimensions for a page on US-letter
-paper are:
+\subsection{Implementation}
 
-\begin{itemize}
-\item Left and right margins: 1in
-\item Top margin:1in
-\item Bottom margin: 1in
-\item Column width: 3.15in
-\item Column height: 9in
-\item Gap between columns: 0.2in
-\end{itemize}
+We based our KNN code from our previous homework assignment. The code in the {\tt predict} function needed the most modification. We needed to take into account the different ways that the USPS and MNIST datasets are encoded from the way the dataset files we were given in class (e.g. {\tt bio.train}). Also, we changed the voting scheme to be unanimous, not majority. In {\tt classify.py}, we needed to modify the {\tt load\textunderscore data} function to be able to correct read and parse the USPS dataset so that it can be readily passed into our methods. Moreover, we needed to adjust the {\tt main} function in this file to correctly handle the two datasets separately.
 
-\noindent Papers should not be submitted on any other paper size. Exceptionally,
-authors for whom it is \emph{impossible} to format on US-Letter paper,
-may format for \emph{A4} paper. In this case, they should keep the \emph{top}
-and \emph{left} margins as given above, use the same column width,
-height and gap, and modify the bottom and right margins as necessary.
-Note that the text will no longer be centered.
-
-\subsection{The First Page}
-\label{ssec:first}
-
-Center the title, author's name(s) and affiliation(s) across both
-columns. Do not use footnotes for affiliations.  Do not include the
-paper ID number assigned during the submission process. 
-Use the two-column format only when you begin the abstract.
-
-{\bf Title}: Place the title centered at the top of the first page, in
-a 15 point bold font.  (For a complete guide to font sizes and styles, see Table~\ref{font-table}.)
-Long title should be typed on two lines without
-a blank line intervening. Approximately, put the title at 1in from the
-top of the page, followed by a blank line, then the author's names(s),
-and the affiliation on the following line.  Do not use only initials
-for given names (middle initials are allowed). Do not format surnames
-in all capitals (e.g., ``Leacock,'' not ``LEACOCK'').  The affiliation should
-contain the author's complete address, and if possible an electronic
-mail address. Leave about 0.75in between the affiliation and the body
-of the first page.
-
-{\bf Abstract}: Type the abstract at the beginning of the first
-column.  The width of the abstract text should be smaller than the
-width of the columns for the text in the body of the paper by about
-0.25in on each side.  Center the word {\bf Abstract} in a 12 point
-bold font above the body of the abstract. The abstract should be a
-concise summary of the general thesis and conclusions of the paper.
-It should be no longer than 200 words.  The abstract text should be in 10 point font.
-
-{\bf Text}: Begin typing the main body of the text immediately after
-the abstract, observing the two-column format as shown in 
-the present document.  Do not include page numbers.
-
-{\bf Indent} when starting a new paragraph. For reasons of uniformity,
-use Adobe's {\bf Times Roman} fonts, with 11 points for text and 
-subsection headings, 12 points for section headings and 15 points for
-the title.  If Times Roman is unavailable, use {\bf Computer Modern
-  Roman} (\LaTeX2e{}'s default; see section \ref{sect:pdf} above).
-Note that the latter is about 10\% less dense than Adobe's Times Roman
-font.
-
-\subsection{Sections}
-
-{\bf Headings}: Type and label section and subsection headings in the
-style shown on the present document.  Use numbered sections (Arabic
-numerals) in order to facilitate cross references. Number subsections
-with the section number and the subsection number separated by a dot,
-in Arabic numerals. 
-
-{\bf Citations}: Citations within the text appear
-in parentheses as~\cite{Gusfield:97} or, if the author's name appears in
-the text itself, as Gusfield~\shortcite{Gusfield:97}. 
-Append lowercase letters to the year in cases of ambiguities.  
-Treat double authors as in~\cite{Aho:72}, but write as 
-in~\cite{Chandra:81} when more than two authors are involved. 
-Collapse multiple citations as in~\cite{Gusfield:97,Aho:72}.
-
-\textbf{References}: Gather the full set of references together under
-the heading {\bf References}; place the section before any Appendices,
-unless they contain references. Arrange the references alphabetically
-by first author, rather than by order of occurrence in the text.
-Provide as complete a citation as possible, using a consistent format,
-such as the one for {\em Computational Linguistics\/} or the one in the 
-{\em Publication Manual of the American 
-Psychological Association\/}~\cite{APA:83}.  Use of full names for
-authors rather than initials is preferred.  A list of abbreviations
-for common computer science journals can be found in the ACM 
-{\em Computing Reviews\/}~\cite{ACM:83}.
-
-The \LaTeX{} and Bib\TeX{} style files provided roughly fit the
-American Psychological Association format, allowing regular citations, 
-short citations and multiple citations as described above.
-
-{\bf Appendices}: Appendices, if any, directly follow the text and the
-references (but see above).  Letter them in sequence and provide an
-informative title: {\bf Appendix A. Title of Appendix}.
-
-\textbf{Acknowledgment} sections should go as a last (unnumbered) section immediately
-before the references.  
-
-\subsection{Footnotes}
-
-{\bf Footnotes}: Put footnotes at the bottom of the page. They may
-be numbered or referred to by asterisks or other
-symbols.\footnote{This is how a footnote should appear.} Footnotes
-should be separated from the text by a line.\footnote{Note the
-line separating the footnotes from the text.}  Footnotes should be in 9 point font.
-
-\subsection{Graphics}
-
-{\bf Illustrations}: Place figures, tables, and photographs in the
-paper near where they are first discussed, rather than at the end, if
-possible.  Wide illustrations may run across both columns and should be placed at
-the top of a page. Color illustrations are discouraged, unless you have verified that 
-they will be understandable when printed in black ink.
+For the SVM portion of the code, we used {\tt scikit-learn}\footnote{http://scikit-learn.org/stable/modules/svm.html}'s {\tt svm.SVC} with a linear kernel as the kernel. For the tangent distance, XXXXXXXXXXXXXX
 
 \begin{table}
 \begin{center}
-\begin{tabular}{|l|rl|}
-\hline \bf Type of Text & \bf Font Size & \bf Style \\ \hline
-paper title & 15 pt & bold \\
-author names & 12 pt & bold \\
-author affiliation & 12 pt & \\
-the word ``Abstract'' & 12 pt & bold \\
-section titles & 12 pt & bold \\
-document text & 11 pt  &\\
-abstract text & 10 pt & \\
-captions & 10 pt & \\
-bibliography & 10 pt & \\
-footnotes & 9 pt & \\
+\begin{tabular}{|l|r|r|}
+\hline \bf K & \bf Accuracy (SVM-KNN) & \bf Accuracy (KNN)\\ \hline
+1 & 0.9691 & 0.9691 \\
+3 & 0.9721 & \textbf{0.9705} \\
+5 & 0.9741 & 0.9688 \\
+10 & 0.9764 & 0.9665 \\
+30 & 0.9815 & 0.9596 \\
+80 & \textbf{0.9831} & 0.9468 \\
+110 & 0.9826& N/A \\
+150 & 0.9682 & N/A \\
 \hline
 \end{tabular}
 \end{center}
-\caption{\label{font-table} Font guide. }
+\caption{\label{svm-knn-mnist} SVM-KNN, KNN results on MNIST. }
 \end{table}
 
-{\bf Captions}: Provide a caption for every illustration; number each one
-sequentially in the form:  ``Figure 1. Caption of the Figure.'' ``Table 1.
-Caption of the Table.''  Type the captions of the figures and 
-tables below the body, using 10 point text.  
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|r|r|}
+\hline \bf K & \bf Accuracy (SVM-KNN) & \bf Accuracy (KNN)\\ \hline
+1 & 0.9437 & 0.9437\\
+3 & 0.9467 & \textbf{0.9447}\\
+5 & 0.9536 & \textbf{0.9447}\\
+10 & \textbf{0.9576} & 0.9357\\
+30 & 0.9547 & 0.9118\\
+80 & 0.9507 & 0.8764\\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{knn-mnist} SVM-KNN, KNN results on USPS. }
+\end{table}
 
-\section{Length of Submission}
-\label{sec:length}
+\section{Experimental Results}
 
-The NAACL HLT 2010 main conference accepts submissions of long papers
-and short papers.  The maximum length of a long paper manuscript is
-eight (8) pages of content and one (1) additional page of references
-\emph{only} (appendices count against the eight pages, not the
-additional one page).  The maximum length of a short paper manuscript
-is four (4) pages including references.  For both long and short
-papers, all illustrations, references, and appendices must be
-accommodated within these page limits, observing the formatting
-instructions given in the present document.  Papers that do not
-conform to the specified length and formatting requirements are
-subject to be rejected without review.
+We performed experiments in the following ways. We ran the standard KNN algorithm with various $K$ values ($K=1,3,5,10,30,80$) on both MNIST and USPS datasets. We also ran the SVM-KNN algorithm with $K=1,3,5,10,30,80,110,150$ on the two datsets. As an additional experiment, we randomly sampled 7,291 images from the MNIST dataset and ran SVM-KNN to evaluate the difference between MNIST and USPS. (Note that 7,291 is the number of training images in the USPS dataset.) Results and analysis follow in following sections.
 
-% Up to two (2) additional pages may be purchased from ACL at the
-% price of \$250 per page; please contact the publication chairs above
-% for more information about this option.
+\subsection{KNN}
 
-\section*{Acknowledgments}
+We implemented and ran the standard KNN algorithm on both MNIST and USPS datasets on $K$ values of 1, 3, 5, 10, 30, and 80. Results are shown in the second columns of Table 1 and Table 2.
 
-Do not number the acknowledgment section.
+\subsection{SVM-KNN}
+
+We modified the standard KNN algorithm to use a unanimous voting scheme and integrated scikit-learn's SVM package. For the first part of our experiments, we used a linear kernel and broke ties by choosing the lower index. For the KNN portion of the algorithm, we used $K$ values of 1, 3, 5, 10, 30, 80, 110, and 150. Reasons for using larger $K$ values (110 and 150) are elaborated in the next section. Results are shown in the first columns of Table 1 and Table 2.
+
+In order to compare the MNIST and USPS datasets, we randomly sampled the same number of training images from the MNIST dataset as the USPS dataset contains (7,291 images) and ran the SVM-KNN on this sampled dataset. Results are shown in Table 3.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|r|r|}
+\hline \bf K & \bf Accuracy (SVM-KNN) \\ \hline
+1 & 0.9428 \\
+3 & 0.9482 \\
+5 & 0.9527 \\
+10 & 0.9600 \\
+30 & 0.9646 \\
+80 & 0.9667 \\
+110 & \textbf{0.9668} \\
+150 & 0.9652 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{knn-mnist} Results on MNIST with 7,291 training samples. }
+\end{table}
+
+\subsection{Tangent Distance}
+
+Text
+
+\subsection{RBF Kernel}
+
+Text
+
+\section{Discussion}
+
+\subsection{KNN on MNIST and USPS}
+
+We can see from Figures 1 and 2 that as $K$ increases, the accuracy decreases using the standard KNN algorithm. First of all, note that we are not using distance weighted metrics in voting. As the $K$ value increases, the algorithm includes in the neighborhood an increased number of irrelevant samples that are members of different classes. Therefore, these irrelevant, incorrect neighbors disrupt the voting and cause incorrect predictions to take place. Naturally, with more samples in the neighborhood that are further away from our input instance, we get more instances that are not in the same class as our input instance. We get lower accuracy as a result.
+
+We perform slightly better on the MNIST dataset than on the USPS dataset. The authors of the original paper [1] attribute this to the fact that the USPS dataset is naturally a harder dataset. The human error rate on the USPS dataset is 2.5$\%$ according to [4]. We empirically verified that this is most likely the case. We discuss more on this thought in Section 6.3.
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[keepaspectratio, width=0.5\textwidth]{mnist_full.png}
+  \caption{Plot of MNIST results.}
+\end{figure}
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[keepaspectratio, width=0.5\textwidth]{usps_full.png}
+  \caption{Plot of USPS results.}
+\end{figure}
+
+\subsection{SVM-KNN on MNIST and USPS}
+
+In running the SVM-KNN, we can run into three different cases: 1) The KNN algorithm reaches a unanimous vote that is incorrect, and the algorithm outputs that result; 2) The KNN algorithm reaches a unanimous vote that is correct, and the algorithm outputs that result; 3) The KNN algorithm does not agree unanimously and seeks help from the SVM. For the third case, there are four subcases based on the combinations of the KNN majority vote being correct or incorrect and SVM being correct or incorrect. Two of those cases (``KNN majority correct $\rightarrow$ SVM incorrect'' and ``KNN majority incorrect $\rightarrow$ SVM correct'') are of interest to us. The case ``KNN majority correct $\rightarrow$ SVM correct'' is trivial, and the case ``KNN majority incorrect $\rightarrow$ SVM incorrect'' cannot be helped by the SVM-KNN algorithm. This is due to either the limits of this algorithm or the presence of illegible handwriting that caused the human error rates.
+
+We noticed empirically that the first case does not happen very often. It may occur occasionally when the sample image contains messy handwriting. The second case happened most frequently.
+
+The third case was where we saw interesting results. Previously in the KNN experiment, the KNN algorithm reached a majority vote on the wrong classification from time to time. However, in many of those cases, the SVM-KNN algorithm outputted the correct classification nonetheless. For example, for one particular instance, the standard KNN outputted a prediction of ``4'' even though the correct label was ``8'' because the majority of the sample's neighbors were of class ``4''. However, when this sample was run on the SVM-KNN, the algorithm outputted ``8''. We concluded that this was due to the fact that the SVM uses a max-margin principle. Therefore, even though a particular test instance may have many neighbors that are not of the same type, the \textit{max-margin}-ed decision boundary learned by the SVM will correct this error.
+
+However, we also contemplated about the case where the KNN would have been correct by majority vote, but the SVM outputted the wrong classification. We concluded that such cases may happen when our test instance is very close to a support vector on the other side of the decision boundary. Therefore, although the majority of its neighbors are of its own type, SVM may give a wrong prediction.
+
+Furthermore, we noticed that the authors of the original paper provided results for only a single $K$ value for each of the experiments. In particular, they used $K=80$ for SVM-KNN and $K=3$ for KNN on MNIST,  and $K=10$ for SVM-KNN and $K=3$ for KNN on USPS. We decided to run the standard KNN and SVM-KNN on various $K$ values for both datasets. We first tested with $K$ values of 1, 3, 5, 10, 30, 80 for both datasets. We were able to observe a pyramid shaped SVM-KNN accuracy plot for the USPS data with $K=10$ serving as the peak. However, the SVM-KNN accuracy for the MNIST dataset required even larger values of $K$ to observe this \textit{pyramid} behavior. We extended the $K$ testing range to include $K=110$ and $K=150$ to observe declinding accuracy on the MNIST dataset.
+
+We can observe from the SVM-KNN result plots in Figure 1, Figure 2, and Figure 3 that the SVM-KNN accuracy performance increases with larger values of $K$ in the beginning and decreases after a peak at a certain $K$ value. We concluded that the reason the SVM-KNN improves at first is that the SVM can learn with more helpful samples (i.e. neighbors chosen by the KNN algorithm). However, with extremely large values of $K$, the KNN algorithm hands the SVM algorithm a neighborhood with many unhelpful instances that create noise and thus disrupt the SVM from correctly constructing the decision boundary. Therefore, we get higher error rates as $K$ keeps on increasing beyond a certain threshold.
+ 
+\subsection{SVM-KNN on 7,291 Sampled MNIST}
+
+In order to be able to make qualitative comparisons of the MNIST and USPS datasets, we randomly sampled the same number of data points from the MNIST dataset as there are in the USPS dataset. (The MNIST dataset has 60,000 training images while the USPS dataset has only 7,291 training images.) Then, we ran the SVM-KNN algorithm on the reduced, randomly sampled MNIST dataset (call it \textit{MNIST 7291}) and recorded the results. We tested for $K$ values of 1, 3, 5, 10, 30, 80, 110, and 150.
+
+We were able to observe that the MNIST 7291 dataset displayed the \textit{pyramid}-ing behavior at $K=80\dots 110$, which is fairly close to the \textit{pyramid}-ing $K$ value for the full MNIST dataset. Therefore, we were able to see that the size of the training dataset had a small effect in influencing the accuracy of the SVM-KNN on the entire datasets and also on the \textit{pyramid}-ing behavior.
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[keepaspectratio, width=0.5\textwidth]{mnist_7291.png}
+  \caption{Plot of MNIST 7291 results.}
+\end{figure}
+
+
+\subsection{Tangent Distance SVM-KNN on USPS}
+
+Text
+
+\subsection{RBF Kernel SVM-KNN on MNIST}
+
+Text
+
+\section{Difficulties Faced}
+
+\subsection{Experiment Run Time}
+
+Text
+
+\subsection{Difficulty 2}
+
+Text
+
+\section{Conclusion}
+
+In this project, we explored the SVM-KNN algorithm on several datasets and compared the results with the standard KNN algorithm. We experimented th SVM-KNN and KNN on the MNIST and USPS datasets of handwritten digits on various $K$ values and sample sizes. We conlcude that the standard KNN algorithm performs worse with increasing values of $K$ while the SVM-KNN shows a pyramid-ing behavior with increasing values of $K$. The incorporation of the SVM into the standard KNN algorithm as a subpattern improves the speed and accuracy in visual object recognition tasks for handwritten digit images. Future work needs to explore more on this algorithm's effectiveness on more complex image datasets such as the Caltech 101, Caltech 256, and ImageNet.
+
+\section{Comparison to Proposal}
+
+\subsection{Must Achieve}
+
+\begin{itemize}
+\item Create SVM-KNN by using our KNN modified from homework and scikit-learn SVM. $\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Done)}
+\item Write kernel trick function mentioned. $\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Done)}
+\item Parse MNIST and USPS datasets to fit as input to our SVM-KNN impelmentation. $\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Done)}
+\item Run SVM-KNN and KNN on MNIST and USPS using $L_2$ distance function. Try different $K$ values for SVM-KNN and KNN. $\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Done)}
+\item Compare $\&$ analyze experiment results. $\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Done)}
+\end{itemize}
+
+\subsection{Expected to Achieve}
+\begin{itemize}
+\item Use shape contextinstead of $L_2$ to compute distance matrix to feed to Kernel SVM when running SVM-KNN on MNIST. 
+
+\textit{(We were not able to complete this portion because the computations involved were intractable. The authors of the original paper proposed scaling up the input image size from 28x28 to 70x70 on a dataset of 60,000 training images and 10,000 test images.)}
+\item Use tangent distance instead of $L_2$ to compute distance matrix to feed to Kernel SVM when running SVM-KNN on USPS.
+\end{itemize}
+
+\subsection{Would Like to Achieve}
+\begin{itemize}
+\item Experiment SVM-KNN on Caltech 101 [3]. 
+
+\textit{(We were not able to XXXXXXXXXXXX)}
+\end{itemize}
+
+\subsection{Extra Work Not Mentioned in Proposal}
+
+\begin{itemize}
+\item Text
+
+\end{itemize}
 
 \begin{thebibliography}{}
 
-\bibitem[\protect\citename{Aho and Ullman}1972]{Aho:72}
-Alfred~V. Aho and Jeffrey~D. Ullman.
-\newblock 1972.
-\newblock {\em The Theory of Parsing, Translation and Compiling}, volume~1.
-\newblock Prentice-{Hall}, Englewood Cliffs, NJ.
+\bibitem[\protect\citename{Zhang, Berg, Maire, Malik}2006]{Zhang, Berg, Maire, Malik:2006}
+1. Hao Zhang, Alexander C. Berg, Michael Maire, Jitendra Malik.
+\newblock 2006.
+\newblock {\em SVM-KNN: Discriminative Nearest Neighbor Classification for Visual Category Recognition}.
+\newblock 2006 IEEE Computer Society Conference on Computer Vision and Pattern Recognition.
 
-\bibitem[\protect\citename{{American Psychological Association}}1983]{APA:83}
-{American Psychological Association}.
-\newblock 1983.
-\newblock {\em Publications Manual}.
-\newblock American Psychological Association, Washington, DC.
+\bibitem[\protect\citename{Belongie, Malik, Puzicha}2002]{Belongie, Malik, Puzicha:2002}
+2. Serge Belongie, Jitendra Malik, Jan Puzicah.
+\newblock 2002.
+\newblock {\em Shape matching and object recognition using shape contexts}.
+\newblock IEEE Trans. Pattern Anal. Mach. Intell.
 
-\bibitem[\protect\citename{{Association for Computing Machinery}}1983]{ACM:83}
-{Association for Computing Machinery}.
-\newblock 1983.
-\newblock {\em Computing Reviews}, 24(11):503--512.
+\bibitem[\protect\citename{Fei-Fi, Fergus, Perona}2004]{Fei-Fi, Fergus, Perona:2004}
+3. L. Fei-Fei, R. Fergus and P. Perona.
+\newblock 2004.
+\newblock {\em SVM-KNN: One-Shot learning of object
+categories}.
+\newblock 2004 IEEE Trans. Pattern Recognition and Machine Intelligence. In press.
 
-\bibitem[\protect\citename{Chandra \bgroup et al.\egroup }1981]{Chandra:81}
-Ashok~K. Chandra, Dexter~C. Kozen, and Larry~J. Stockmeyer.
-\newblock 1981.
-\newblock Alternation.
-\newblock {\em Journal of the Association for Computing Machinery},
-  28(1):114--133.
+\bibitem[\protect\citename{Bromley, Sackinger}1991]{Bromley, Sackinger:1991}
+4. Jane Bromley and Eduard Sackinger.
+\newblock 1991.
+\newblock {\em Neural-network and K-nearest-neighbor classifiers}.
+\newblock Technical Report 11359-910819-16TM, AT$\&$T.
 
-\bibitem[\protect\citename{Gusfield}1997]{Gusfield:97}
-Dan Gusfield.
-\newblock 1997.
-\newblock {\em Algorithms on Strings, Trees and Sequences}.
-\newblock Cambridge University Press, Cambridge, UK.
-
+\bibitem[\protect\citename{Simard, LeCun, Denker}1993]{Simard, LeCun, Denker: 1993}
+5. Patrice Simard, Yann LeCun, John Denker.
+\newblock 1993.
+\newblock {\em Efficient Pattern Recognition Using a New Transformation Distance}.
+\newblock In NIPS, pages 50-58, San Francisco, CA, USA. Morgan Kaufmann Publishers Inc.
 \end{thebibliography}
 
 \end{document}

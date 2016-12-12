@@ -2,6 +2,7 @@ import os
 import argparse
 import sys
 import pickle
+import random
 
 from predictor_subclasses import *
 from sklearn.datasets import fetch_mldata
@@ -16,6 +17,7 @@ CUSTOM_DATA_HOME_JC_UGRAD = '/home/jlee381/machine_learning_final_project/code'
 
 def load_data(filename):
     instances = []
+    # feature_vectors = []
     with open(filename) as reader:
         for line in reader:
             if len(line.strip()) == 0:
@@ -41,10 +43,11 @@ def load_data(filename):
                 except ValueError:
                     raise ValueError("Unable to convert value " + item.split(":")[1] + " to float.")
                 feature_vector.append(value)
-
+            # feature_vectors.append(np.array(feature_vector))
             instance = Instance(feature_vector, label)
             instances.append(instance)
-
+    # feature_vectors = np.array(feature_vectors)
+    # np.savetxt(fname='usps_training_vectors.txt', X=feature_vectors, delimiter=',', fmt='%.4f')
     return instances
 
 
@@ -108,7 +111,7 @@ def main():
     args = get_args()
 
     if args.data == "mnist":
-        mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JC_UGRAD)
+        mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JH)
 
         if args.mode.lower() == "train":
             # Load the training data.
@@ -125,6 +128,17 @@ def main():
             # Full dataset training.
             train_set = mnist.data[:60000]
             train_labels = mnist.target[:60000]
+
+            # # 7291 sampled version.
+            # indices = random.sample(range(60000), 7291)
+            # indices.sort()
+
+            # # Randomly sampled data.
+            # train_set = []
+            # train_labels = []
+            # for i in indices:
+            #     train_set.append(mnist.data[i])
+            #     train_labels.append(mnist.target[i])
 
             # Train the model.
             predictor = train(train_set, train_labels, args)
@@ -152,6 +166,16 @@ def main():
             test_set = mnist.data[60000:]
             true_labels = mnist.target[60000:]
             
+            # indices = random.sample(range(60000, 70001), 2007)
+            # indices.sort()
+
+            # # Randomly sampled data.
+            # test_set = []
+            # true_labels = []
+            # for i in indices:
+            #     test_set.append(mnist.data[i])
+            #     true_labels.append(mnist.target[i])
+
             predictor = None
             # Load the model.
             try:

@@ -46,7 +46,7 @@ class KNN(Predictor):
                 if -votes[0][1] == self.K:
                     return votes[0][0]
                 else:
-                    clf = SVC(kernel='linear')
+                    clf = SVC(kernel='rbf')
                     X = [x[2] for x in nearest_neighbors]
                     y = [x[0] for x in nearest_neighbors]
                     clf.fit(X, y)

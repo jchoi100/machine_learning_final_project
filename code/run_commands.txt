@@ -1,6 +1,13 @@
 
 ============================MNIST SVM_KNN============================
 
+
+python classify.py --data mnist --mode train --algorithm svm_knn --knn 1 --model-file mnist.svm_knn1.model 
+python classify.py --data mnist --mode test --model-file mnist.svm_knn1.model --predictions-file mnist.svm_knn1.predictions
+python compute_accuracy.py mnist.svm_knn1.predictions
+
+
+
 python classify.py --data mnist --mode train --algorithm svm_knn --knn 3 --model-file mnist.svm_knn3.model 
 python classify.py --data mnist --mode test --model-file mnist.svm_knn3.model --predictions-file mnist.svm_knn3.predictions
 python compute_accuracy.py mnist.svm_knn3.predictions
@@ -21,9 +28,22 @@ python classify.py --data mnist --mode train --algorithm svm_knn --knn 80 --mode
 python classify.py --data mnist --mode test --model-file mnist.svm_knn80.model --predictions-file mnist.svm_knn80.predictions
 python compute_accuracy.py mnist.svm_knn80.predictions
 
+python classify.py --data mnist --mode train --algorithm svm_knn --knn 110 --model-file mnist.svm_knn110.model 
+python classify.py --data mnist --mode test --model-file mnist.svm_knn110.model --predictions-file mnist.svm_knn110.predictions
+python compute_accuracy.py mnist.svm_knn110.predictions
+
+
+python classify.py --data mnist --mode train --algorithm svm_knn --knn 150 --model-file mnist.svm_knn150.model 
+python classify.py --data mnist --mode test --model-file mnist.svm_knn150.model --predictions-file mnist.svm_knn150.predictions
+python compute_accuracy.py mnist.svm_knn150.predictions
+
+
 
 ============================MNIST KNN============================
 
+python classify.py --data mnist --mode train --algorithm knn --knn 1 --model-file mnist.knn1.model 
+python classify.py --data mnist --mode test --model-file mnist.knn1.model --predictions-file mnist.knn1.predictions
+python compute_accuracy.py mnist.knn1.predictions
 
 python classify.py --data mnist --mode train --algorithm knn --knn 3 --model-file mnist.knn3.model 
 python classify.py --data mnist --mode test --model-file mnist.knn3.model --predictions-file mnist.knn3.predictions
@@ -57,6 +77,10 @@ python compute_accuracy.py mnist.distance_knn.predictions
 
 ============================USPS SVM_KNN============================
 
+python classify.py --data usps --mode train --algorithm svm_knn --knn 1 --model-file usps.svm_knn1.model --train-dataset mldata/zip.train
+python classify.py --data usps --mode test --model-file usps.svm_knn1.model --predictions-file usps.svm_knn1.predictions --test-dataset mldata/zip.test
+python compute_accuracy_usps.py mldata/zip.test usps.svm_knn1.predictions
+
 python classify.py --data usps --mode train --algorithm svm_knn --knn 3 --model-file usps.svm_knn3.model --train-dataset zip.train
 python classify.py --data usps --mode test --model-file usps.svm_knn3.model --predictions-file usps.svm_knn3.predictions --test-dataset zip.test
 python compute_accuracy_usps.py zip.test usps.svm_knn3.predictions
@@ -81,6 +105,10 @@ python compute_accuracy_usps.py zip.test usps.svm_knn80.predictions
 
 
 ============================USPS KNN============================
+
+python classify.py --data usps --mode train --algorithm knn --knn 1 --model-file usps.knn1.model --train-dataset mldata/zip.train
+python classify.py --data usps --mode test --model-file usps.knn1.model --predictions-file usps.knn1.predictions --test-dataset mldata/zip.test
+python compute_accuracy_usps.py mldata/zip.test usps.knn1.predictions
 
 python classify.py --data usps --mode train --algorithm knn --knn 3 --model-file usps.knn3.model --train-dataset zip.train
 python classify.py --data usps --mode test --model-file usps.knn3.model --predictions-file usps.knn3.predictions --test-dataset zip.test
