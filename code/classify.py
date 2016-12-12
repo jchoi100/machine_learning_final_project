@@ -111,6 +111,7 @@ def main():
     args = get_args()
 
     if args.data == "mnist":
+
         mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JH)
 
         if args.mode.lower() == "train":
