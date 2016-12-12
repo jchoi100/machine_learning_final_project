@@ -89,7 +89,7 @@ We based our KNN code from our previous homework assignment. The code in the {\t
 
 %%%%%%%%%%%%%%%( 1/4 )%%%%%%%%%%%%%%%
 
-For the SVM portion of the code, we used {\tt scikit-learn}\footnote{http://scikit-learn.org/stable/modules/svm.html}'s {\tt svm.SVC} with a linear kernel as the kernel. For the tangent distance, XXXXXXXXXXXXXX. We used {\tt scikit-learn}'s SVC with the RBF Kernel option to run experiments.
+For the SVM portion of the code, we used {\tt scikit-learn}\footnote{http://scikit-learn.org/stable/modules/svm.html}'s {\tt svm.SVC} with a linear kernel as the kernel. For the tangent distance, we modified the RWTH-i6 C-implementation from online source\footnote{https://www-i6.informatik.rwth-aachen.de/~keysers/td/} to serve our purpose in Python, and applied kernel trick as defined in [1]. We used {\tt scikit-learn}'s SVC with the RBF Kernel option to run experiments.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -146,7 +146,11 @@ In order to compare the MNIST and USPS datasets, we randomly sampled the same nu
 %%%%%%%%%%%%%%( 2/4 )%%%%%%%%%%%%%%%%
 \subsection{Tangent Distance}
 
-Text
+Tangent distance is the minimal distance between the linear surfaces that best approximate the two non-linear manifolds $S_P$ and $S_E$ as defined in [10]. The distance in the implementation was calculated from seven transformations of the images, which includes shifting, deformation, rotation, and scaling. After the distance is calculated, it is used in the SVM by applying a kernel trick:
+
+$$K(x,y)=<x,y>=\frac{1}{2}(d(x,0)+d(y,0)-d(x,y))$$
+
+Unlike the implementation from [1], the tangents were calculated from the raw images without smoothening.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{RBF Kernel}
