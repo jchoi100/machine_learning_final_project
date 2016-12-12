@@ -56,7 +56,7 @@ For this project, we mainly used two datasets: MNIST and USPS, both of which are
 
 \subsection{MNIST \footnote{http://yann.lecun.com/exdb/mnist/}}
 
-MNIST (Mixed National Institute of Standards and Technology database) is a database of handwritten digits commonly used for training image processing systems. The dataset was created by mixing and normalizing the samples from NIST's original datasets. The dataset contains 60,000 training images and 10,000 testing images. Each image is of size 28x28. Currently, the state of the art Convolutional Neural Network approach achieves an error rate of 0.21$\%$ on this dataset.
+MNIST (Mixed National Institute of Standards and Technology database) is a database of handwritten digits commonly used for training image processing systems. The dataset was created by mixing and normalizing the samples from NIST's original datasets. The dataset contains 60,000 training images and 10,000 testing images. Each image is of size 28x28. Currently, the state of the art Convolutional Neural Network approach achieves an error rate of 0.21$\%$ on this dataset [6].
 
 \subsection{USPS \footnote{https://www.otexts.org/1577}}
 
@@ -85,9 +85,11 @@ The K-Nearest Neighbhors Algorithm is a machine learning method used for classif
 
 \subsection{Implementation}
 
-We based our KNN code from our previous homework assignment. The code in the {\tt predict} function needed the most modification. We needed to take into account the different ways that the USPS and MNIST datasets are encoded from the way the dataset files we were given in class (e.g. {\tt bio.train}). Also, we changed the voting scheme to be unanimous, not majority. In {\tt classify.py}, we needed to modify the {\tt load\textunderscore data} function to be able to correct read and parse the USPS dataset so that it can be readily passed into our methods. Moreover, we needed to adjust the {\tt main} function in this file to correctly handle the two datasets separately.
+We based our KNN code from our previous homework assignment. The code in the {\tt predict} function needed the most modification. We needed to take into account the different ways that the USPS and MNIST datasets were encoded from the way the dataset files we were given in class (e.g. {\tt bio.train}). Also, we changed the voting scheme to be unanimous, not majority. In {\tt classify.py}, we needed to modify the {\tt load\textunderscore data} function to be able to correct read and parse the USPS dataset so that it can be readily passed into our methods. Moreover, we needed to adjust the {\tt main} function in this file to correctly handle the two datasets separately.
 
 For the SVM portion of the code, we used {\tt scikit-learn}\footnote{http://scikit-learn.org/stable/modules/svm.html}'s {\tt svm.SVC} with a linear kernel as the kernel. For the tangent distance, XXXXXXXXXXXXXX
+
+The code we wrote can be viewed in our GitHub repository\footnote{https://github.com/jchoi100/machine\textunderscore learning\textunderscore final\textunderscore project}. Run commands are listed in the text file {\tt code/run\textunderscore commands.txt}.
 
 \begin{table}
 \begin{center}
@@ -137,6 +139,36 @@ We modified the standard KNN algorithm to use a unanimous voting scheme and inte
 
 In order to compare the MNIST and USPS datasets, we randomly sampled the same number of training images from the MNIST dataset as the USPS dataset contains (7,291 images) and ran the SVM-KNN on this sampled dataset. Results are shown in Table 3.
 
+
+
+\subsection{Tangent Distance}
+
+Text
+
+\subsection{RBF Kernel}
+
+Based on the approach taken by the authors in [7], we also ran the SVM-KNN using the RBF kernel on the MNIST dataset.
+
+\section{Discussion}
+
+\subsection{KNN on MNIST and USPS}
+
+We can see from Figures 1 and 2 that as $K$ increases, the accuracy decreases using the standard KNN algorithm. First of all, note that we are not using distance weighted metrics in voting. As the $K$ value increases, the algorithm includes in the neighborhood an increased number of irrelevant samples that are members of different classes. Therefore, these irrelevant, incorrect neighbors disrupt the voting and cause incorrect predictions to take place. Naturally, with more samples in the neighborhood that are further away from our input instance, we get more instances that are not in the same class as our input instance. We get lower accuracy as a result.
+
+We perform slightly better on the MNIST dataset than on the USPS dataset. The authors of the original paper [1] attribute this to the fact that the USPS dataset is naturally harder. The human error rate on the USPS dataset is 2.5$\%$ according to [4]. We empirically verified that this is most likely the case. We discuss more on this thought in Section 6.3.
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[keepaspectratio, width=0.5\textwidth]{mnist_full.png}
+  \caption{Plot of MNIST results.}
+\end{figure}
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[keepaspectratio, width=0.5\textwidth]{usps_full.png}
+  \caption{Plot of USPS results.}
+\end{figure}
+
 \begin{table}
 \begin{center}
 \begin{tabular}{|l|r|r|}
@@ -154,34 +186,6 @@ In order to compare the MNIST and USPS datasets, we randomly sampled the same nu
 \end{center}
 \caption{\label{knn-mnist} Results on MNIST with 7,291 training samples. }
 \end{table}
-
-\subsection{Tangent Distance}
-
-Text
-
-\subsection{RBF Kernel}
-
-Text
-
-\section{Discussion}
-
-\subsection{KNN on MNIST and USPS}
-
-We can see from Figures 1 and 2 that as $K$ increases, the accuracy decreases using the standard KNN algorithm. First of all, note that we are not using distance weighted metrics in voting. As the $K$ value increases, the algorithm includes in the neighborhood an increased number of irrelevant samples that are members of different classes. Therefore, these irrelevant, incorrect neighbors disrupt the voting and cause incorrect predictions to take place. Naturally, with more samples in the neighborhood that are further away from our input instance, we get more instances that are not in the same class as our input instance. We get lower accuracy as a result.
-
-We perform slightly better on the MNIST dataset than on the USPS dataset. The authors of the original paper [1] attribute this to the fact that the USPS dataset is naturally a harder dataset. The human error rate on the USPS dataset is 2.5$\%$ according to [4]. We empirically verified that this is most likely the case. We discuss more on this thought in Section 6.3.
-
-\begin{figure}[t!]
-  \centering
-  \includegraphics[keepaspectratio, width=0.5\textwidth]{mnist_full.png}
-  \caption{Plot of MNIST results.}
-\end{figure}
-
-\begin{figure}[t!]
-  \centering
-  \includegraphics[keepaspectratio, width=0.5\textwidth]{usps_full.png}
-  \caption{Plot of USPS results.}
-\end{figure}
 
 \subsection{SVM-KNN on MNIST and USPS}
 
@@ -277,20 +281,20 @@ In this project, we explored the SVM-KNN algorithm on several datasets and compa
 \bibitem[\protect\citename{Belongie, Malik, Puzicha}2002]{Belongie, Malik, Puzicha:2002}
 2. Serge Belongie, Jitendra Malik, Jan Puzicah.
 \newblock 2002.
-\newblock {\em Shape matching and object recognition using shape contexts}.
+\newblock {\em Shape Matching and Object Recognition Using Shape Contexts}.
 \newblock IEEE Trans. Pattern Anal. Mach. Intell.
 
 \bibitem[\protect\citename{Fei-Fi, Fergus, Perona}2004]{Fei-Fi, Fergus, Perona:2004}
 3. L. Fei-Fei, R. Fergus and P. Perona.
 \newblock 2004.
-\newblock {\em SVM-KNN: One-Shot learning of object
-categories}.
+\newblock {\em SVM-KNN: One-Shot Learning of Object
+Categories}.
 \newblock 2004 IEEE Trans. Pattern Recognition and Machine Intelligence. In press.
 
 \bibitem[\protect\citename{Bromley, Sackinger}1991]{Bromley, Sackinger:1991}
 4. Jane Bromley and Eduard Sackinger.
 \newblock 1991.
-\newblock {\em Neural-network and K-nearest-neighbor classifiers}.
+\newblock {\em Neural-network and K-nearest-neighbor Classifiers}.
 \newblock Technical Report 11359-910819-16TM, AT$\&$T.
 
 \bibitem[\protect\citename{Simard, LeCun, Denker}1993]{Simard, LeCun, Denker: 1993}
@@ -298,6 +302,20 @@ categories}.
 \newblock 1993.
 \newblock {\em Efficient Pattern Recognition Using a New Transformation Distance}.
 \newblock In NIPS, pages 50-58, San Francisco, CA, USA. Morgan Kaufmann Publishers Inc.
+
+\bibitem[\protect\citename{Wan, Zeiler, Zhang, LeCun, Fergus}2013]{Wan, Zeiler, Zhang, LeCun, Fergus: 2013}
+6. Li Wan, Matthew Zeiler, Sixin Zhang, Yann LeCun, Rob Fergus.
+\newblock 2013.
+\newblock {\em Regularization of Neural Networks using DropConnect}.
+\newblock International Conference on Machine Learning 2013.
+
+\bibitem[\protect\citename{Maji, Malik}2013]{Maji, Malik: 2009}
+7. Subhransu Maji, Jitendra Malik.
+\newblock 2009.
+\newblock {\em Fast and Accurate Digit Classification}.
+\newblock EECS Department, University of California, Berkeley, Tech. Rep. UCB/EECS-2009-159.
+
+
 \end{thebibliography}
 
 \end{document}
