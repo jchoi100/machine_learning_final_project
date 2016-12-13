@@ -51,9 +51,6 @@ class KNN(Predictor):
         nearest_neighbors = sorted(nearest_neighbors, key=lambda tup: (tup[1], tup[0]))
         nearest_neighbors = nearest_neighbors[0:self.K]
 
-        for i in nearest_neighbors:
-            print i[0]
-
         # Run KNN then SVM if necessary.
         votes = {}
         if self.is_weighted:
@@ -78,6 +75,5 @@ class KNN(Predictor):
                     X = [x[2] for x in nearest_neighbors]
                     y = [x[0] for x in nearest_neighbors]
                     clf.fit(X, y)
-                    print("!")
                     return clf.predict([test_vector])[0]
         return votes[0][0]
