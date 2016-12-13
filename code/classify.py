@@ -43,11 +43,9 @@ def load_data(filename):
                 except ValueError:
                     raise ValueError("Unable to convert value " + item.split(":")[1] + " to float.")
                 feature_vector.append(value)
-            # feature_vectors.append(np.array(feature_vector))
             instance = Instance(feature_vector, label)
             instances.append(instance)
-    # feature_vectors = np.array(feature_vectors)
-    # np.savetxt(fname='usps_training_vectors.txt', X=feature_vectors, delimiter=',', fmt='%.4f')
+
     return instances
 
 
@@ -115,26 +113,13 @@ def main():
         mnist = fetch_mldata('MNIST original', data_home=CUSTOM_DATA_HOME_JH)
 
         if args.mode.lower() == "train":
-            # Load the training data.
-
-            # Sampled dataset training.
-            # train_set = []
-            # train_labels = []
-            # for i in range(0, 60000, 4):
-            #     train_set.append(mnist.data[i])
-            #     train_labels.append(mnist.target[i])
-            # train_set = np.array(train_set)
-            # train_labels = np.array(train_labels)
-
             # Full dataset training.
             train_set = mnist.data[:60000]
             train_labels = mnist.target[:60000]
 
-            # # 7291 sampled version.
+            # 7291 sampled version.
             # indices = random.sample(range(60000), 7291)
             # indices.sort()
-
-            # # Randomly sampled data.
             # train_set = []
             # train_labels = []
             # for i in indices:
@@ -154,23 +139,13 @@ def main():
         elif args.mode.lower() == "test":
             # Load the test data.
 
-            # Sampled dataset testing.
-            # test_set = []
-            # true_labels = []
-            # for i in range(60000, len(mnist.data), 90):
-            #     test_set.append(mnist.data[i])
-                # true_labels.append(mnist.target[i])
-            # test_set = np.array(test_set)
-            # true_labels = np.array(true_labels)
-
             # Full dataset testing.
             test_set = mnist.data[60000:]
             true_labels = mnist.target[60000:]
             
+            # 7291 sampled version.
             # indices = random.sample(range(60000, 70001), 2007)
             # indices.sort()
-
-            # # Randomly sampled data.
             # test_set = []
             # true_labels = []
             # for i in indices:
@@ -200,6 +175,7 @@ def main():
             train_labels = [np.array(x._label) for x in train_instances]
             train_set = np.array(train_set)
             train_labels = np.array(train_labels)
+
             # Train the model.
             predictor = train(train_set, train_labels, args)
             try:
@@ -217,6 +193,7 @@ def main():
             # Full dataset testing.
             test_set = [np.array(x._feature_vector) for x in test_instances]
             predictor = None
+
             # Load the model.
             try:
                 with open(args.model_file, 'rb') as reader:

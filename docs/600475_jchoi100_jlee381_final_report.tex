@@ -30,11 +30,11 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-The k-Nearest Neighbor (KNN) algorithm is a non-parametric method used for classification and regression. In a previous assignment, we implemented the KNN classifier and one of its variants, the distance weighted KNN. We felt the need to take another step from this assignment and explore another type of the KNN algorithm, which is more involved.
+The \textit{k}-Nearest Neighbor (KNN) algorithm is a non-parametric method used for classification and regression. In a previous assignment, we implemented the KNN classifier and one of its variants, the distance weighted KNN. We felt the need to take another step from this assignment and explore another type of the KNN algorithm, which is more involved.
 
-The KNN variant that we explore in this work is the SVM-KNN, a KNN algorithm that makes use of a kernel multiclass support vector machine (SVM) as a subprocedure. The nearest neighbor approach in visual recognition problems has proven to work well in the past. However, despite its benefits, the nearest neighbor approach may suffer from high variation due to finite sampling. The incorporation of an SVM can remedy this situation. The SVM-KNN algorithm attempts to use the standard KNN algorithm with a unanimous voting scheme and then turns to a multiclass SVM if a unanimous agreement was not achieved.
+The KNN variant that we explore in this work is the SVM-KNN, a KNN algorithm that makes use of a kernel multiclass support vector machine (SVM) as a subprocedure. The nearest neighbor approach in visual recognition problems has proven to work well in the past. However, despite its benefits, the nearest neighbor approach may suffer from high variation due to finite sampling. The incorporation of an SVM can remedy this situation. The SVM-KNN algorithm attempts to use the standard KNN algorithm with a unanimous voting scheme and then turns to a multiclass SVM should there be a disagreement.
 
-Using an SVM can be effective in the neighborhood of a small number of examples and a small number of classes. We tested this algorithm and compared the performance with the standard KNN on two datasets: MNIST and USPS. We also tested for various values of $K$ on both the KNN and SVM-KNN algorithms.
+Using an SVM can be effective in the neighborhood of a small number of examples and classes [1]. We tested this algorithm and compared the performance with the standard KNN on two datasets: MNIST and USPS. We also tested for various values of $K$ on both the KNN and SVM-KNN algorithms and different kernel functions on the SVM-KNN.
 
 \end{abstract}
 
@@ -44,15 +44,15 @@ Dynamics in college classrooms have changed drastically in the past decade. Just
 
 \section{Background}
 
-Performance on visual category recognition has improved by great amounts in the past decade. However, many algorithms are still far from reaching human level performance or are too slow to train. From positive results that past works in the literature have acheived in visual category recognition including the USPS zip code dataset by [5] and shape context based distance on the MNIST dataset [2], the authors of the original paper [1] concluded that exploring other approaches using the nearest neighbhor algorithm could yield fast and accurate results.
+Performance on visual category recognition has improved by great amounts in the past decade. However, many algorithms are still far from reaching human level performance or are too slow to train. From positive results that past works in the literature have acheived in visual category recognition including the USPS zip code dataset by [5] and shape context based distance on the MNIST dataset [2], the authors of [1] concluded that exploring other approaches using the nearest neighbhor algorithm could yield fast and accurate results.
 
-The motivations behind using the nearest neighbor approach in visual cateogry recognition are as follow. First, the nearest neighbor approach does not require the explicit construction of a feature space. Second, the nearest neighbor algorithm solves a multiclass classification naturally. Third, as the sample size grows large, the error rate of a nearest neighbor algorithm grows very low.
+The motivations behind using the nearest neighbor approach in visual cateogry recognition are as follow. First, the nearest neighbor approach does not require the explicit construction of a feature space. Second, the nearest neighbor algorithm solves a multiclass classification naturally. Third, as the sample size grows large, the error rate of a nearest neighbor algorithm may decrease [1].
 
-However, because we are given a limited amount of sample data, the nearest neighbhor algorithm may suffer from high variation. The incorporation of an SVM mitigates this problem. First, the SVM allows for the use of various distance functions. Second, with the finite neighborhood passed by the KNN classifier as input, an SVM trains faster and performs multiclass classification more naturally than it would when given the entire dataset as input. Lastly, the authors of the original paper note that the motivation also came from human pyschophysics. Humans first perform quick coarse categorization and then perform more accurate and slower discrimination with time when performing visual recognition tasks. The KNN works as the preliminary pruning process, and the SVM performs the fine discrimination stage.
+However, because we are given a limited amount of sample data, the KNN algorithm may suffer from high variation. The incorporation of an SVM mitigates this problem. First, the SVM allows for the use of various distance functions. Second, with the finite neighborhood passed by the KNN classifier as input, an SVM trains faster and performs multiclass classification more naturally than it would when given the entire dataset as input. Lastly, the authors of [1] note that the motivation also came from human psychophysics. Humans first perform quick coarse categorization and then perform more accurate and slower discrimination with time when performing visual recognition tasks. The KNN works as the preliminary pruning process, and the SVM performs the fine discrimination stage.
 
 \section{Datasets}
 
-For this project, we mainly used two datasets: MNIST and USPS, both of which are datasets of handwritten digits.
+We mainly used two datasets: MNIST and USPS, both of which are datasets of handwritten digits.
 
 \subsection{MNIST}
 
@@ -60,13 +60,13 @@ MNIST \footnote{http://yann.lecun.com/exdb/mnist/} (Mixed National Institute of 
 
 \subsection{USPS}
 
-The USPS dataset constructed in [9] is a dataset of handwritten digits with 7,291 training and 2,007 testing images. The dataset was obtained from the scanning of handwritten digits from envelopes by the U.S. Postal Service. The images in this dataset have been deslanted and size normalized from the original images. Each image is 16x16 grayscale.
+The USPS (U.S. Postal Service) dataset constructed in [9] is a dataset of handwritten zipcodes with 7,291 training images and 2,007 testing images. The dataset was obtained from the scanning of handwritten digits from envelopes by the USPS. The images in this dataset have been deslanted and size normalized from the original images. Each image is 16x16 grayscale.
 
 \section{SVM-KNN Algorithm}
 
-In this section, we describe the SVM-KNN algorithm proposed by the authors in [1]. Then we give short overviews of the SVM and KNN algorithms.\\
+In this section, we describe the SVM-KNN algorithm proposed by [1]. Then we give short overviews of the SVM and KNN algorithms.\\
 
-\textbf{Algorithm 1}
+\textbf{Algorithm 1 ($L_2$)}
 
 For input instance $x$,
 \begin{enumerate}[(1)]
@@ -74,7 +74,7 @@ For input instance $x$,
 \item If the $K$ neighbors have the same labels, $x$ is labeled and terminate.\\
 \qquad Else, compute the pairwise distances between the $K$ neighbors.
 \item Convert the distance matrix to a kernel matrix and apply multiclass SVM.
-\item Use resulting classifier to label $x$.
+\item Use resulting classifier to label $x$.\\
 \end{enumerate}
 
 For USPS, run the following algorithm as well.\\
@@ -90,30 +90,32 @@ For input instance $x$,
 \item Apply SVM on the kernel matrix and label $x$ using the resulting classifier.
 \end{enumerate}
 
+Choosing larger values for $K_{sl}$ does not improve empirical results [1].
+
 \subsection{Support Vector Machine (SVM)}
 
-Support vector machines are supervised learning models used for classification and regression analysis. Given a set of training instances, each with a corresponding label, an SVM builds a machine learning model that assigns new instances to one category or the other. An SVM is a non-probabilistic classifier. It is a representation of the instances in space, mapped so that the instances of different classes are divided by a gap that is as wide as it can be (max-margin principle). A new instance is mapped into the space and predicted to belong to a class based on the side of the boundary that it falls into. An SVM also allows for non-linear classification with the help of the kernel trick, which implicitly maps inputs into high-dimensional feature spaces. 
+Support vector machines are supervised learning models used for classification and regression analysis. Given a set of training instances, each with a corresponding label, an SVM builds a machine learning model that assigns new instances to one category or the other. An SVM is a non-probabilistic classifier. It is a representation of the instances in space, mapped so that the instances of different classes are divided by a gap that is as wide as it can be (max-margin principle). A new instance is mapped into the space and predicted to belong to a class based on the side of the boundary that it falls into. An SVM also allows for non-linear classification with the help of the kernel trick, which implicitly maps inputs into high-dimensional feature spaces.
 
-\subsection{K-Nearest Neighbors (KNN)}
+\subsection{\textit{k}-Nearest Neighbors (KNN)}
 
-The K-Nearest Neighbhors Algorithm is a machine learning method used for classification and regression. The input consists of the $K$ nearest training instances in the feature space. In a classification task, the output is a prediction of the class of the given input. The KNN algorithm decides on this prediction by using a majority vote of the input instance's neighbors. The input instance is assigned the label of the class most common among its $K$ neighbors.
+The \textit{k}-Nearest Neighbhors Algorithm is a machine learning method used for classification and regression. The input consists of the $K$ nearest training instances in the feature space. In a classification task, the output is a prediction of the class of the given input. The KNN algorithm decides on this prediction by using a majority vote of the input instance's neighbors. The input instance is assigned the label of the class most common among its $K$ neighbors.
 
 \subsection{Implementation}
 
-We based our KNN code from our previous homework assignment. The code in the {\tt predict} function needed the most modification. We needed to take into account the different ways that the USPS and MNIST datasets were encoded from the way the dataset files we were given in class (e.g. {\tt bio.train}). Also, we changed the voting scheme to be unanimous, not majority. In {\tt classify.py}, we needed to modify the {\tt load\textunderscore data} function to be able to correct read and parse the USPS dataset so that it can be readily passed into our methods. Moreover, we needed to adjust the {\tt main} function in this file to correctly handle the two datasets separately.
+We based our KNN code from our previous homework assignment. The code in the {\tt predict} function needed the most modification. We needed to take into account the different ways that the USPS and MNIST datasets were encoded from the way the dataset files we were given in class (e.g. {\tt bio.train}). Also, we changed the voting scheme to be unanimous, not majority. In {\tt classify.py}, we needed to modify the {\tt load\textunderscore data} function to be able to correctly read and parse the USPS dataset so that it can be readily passed into our methods. Moreover, we needed to adjust the {\tt main} function in this file to correctly handle the two datasets separately.
 
 %%%%%%%%%%%%%%%( 1/4 )%%%%%%%%%%%%%%%
 
-For the SVM portion of the code, we used {\tt scikit-learn}\footnote{http://scikit-learn.org/stable/modules/svm.html}'s {\tt svm.SVC} with a linear kernel as the kernel. For the tangent distance, we modified the RWTH-i6 C-implementation from online source\footnote{https://www-i6.informatik.rwth-aachen.de/~keysers/td/} to serve our purpose in Python, and applied kernel trick as defined in [1]. We used {\tt scikit-learn}'s SVC with the RBF Kernel option to run experiments.
+For the SVM portion of the code, we used {\tt scikit-learn}'s {\tt svm.SVC}\footnote{http://scikit-learn.org/stable/modules/svm.html} with a linear kernel as the kernel. For the tangent distance, we modified the RWTH-i6 C-implementation from an online source\footnote{https://www-i6.informatik.rwth-aachen.de/~keysers/td/} to serve our purpose in Python, and applied kernel trick as defined in [1]. We used {\tt scikit-learn}'s {\tt SVC} with the RBF Kernel option to run experiments and compare results.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The code we wrote can be viewed in our GitHub repository\footnote{https://github.com/jchoi100/machine\textunderscore learning\textunderscore final\textunderscore project}. Run commands are listed in the text file {\tt code/run\textunderscore commands.txt}.
+Our code can be viewed in our GitHub repository\footnote{https://github.com/jchoi100/machine\textunderscore learning\textunderscore final\textunderscore project}. Run commands are listed in the text file {\tt code/run\textunderscore commands.txt}.
 
 \begin{table}
 \begin{center}
 \begin{tabular}{|l|r|r|}
-\hline \bf K & \bf Accuracy (SVM-KNN) & \bf Accuracy (KNN)\\ \hline
+\hline \bf K & \bf SVM-KNN & \bf KNN\\ \hline
 1 & 0.9691 & 0.9691 \\
 3 & 0.9721 & \textbf{0.9705} \\
 5 & 0.9741 & 0.9688 \\
@@ -125,13 +127,13 @@ The code we wrote can be viewed in our GitHub repository\footnote{https://github
 \hline
 \end{tabular}
 \end{center}
-\caption{\label{svm-knn-mnist} SVM-KNN, KNN results on MNIST. }
+\caption{\label{svm-knn-mnist} SVM-KNN, KNN Accuracy on MNIST. }
 \end{table}
 
 \begin{table}
 \begin{center}
 \begin{tabular}{|l|r|r|}
-\hline \bf K & \bf Accuracy (SVM-KNN) & \bf Accuracy (KNN)\\ \hline
+\hline \bf K & \bf SVM-KNN & \bf KNN\\ \hline
 1 & 0.9437 & 0.9437\\
 3 & 0.9467 & \textbf{0.9447}\\
 5 & 0.9536 & \textbf{0.9447}\\
@@ -146,21 +148,21 @@ The code we wrote can be viewed in our GitHub repository\footnote{https://github
 
 \section{Experimental Results}
 
-We ran the standard KNN algorithm with $K=\{1,3,5,10,30,80\}$ on both MNIST and USPS datasets using $L_2$ distance. We ran the SVM-KNN algorithm with $K=\{1,3,5,10,30,80,110,150\}$ on the two datsets. We randomly sampled 7,291 images from the MNIST dataset and ran SVM-KNN to evaluate the difference between MNIST and USPS. (Note that 7,291 is the number of training images in the USPS dataset.) We also ran experiments on the USPS dataset using the tangent distance kernel and MNIST dataset using the RBF kernel. Results and analysis follow in following sections.
+We ran the standard KNN algorithm with $K=\{1,3,5,10,30,80\}$ on both MNIST and USPS datasets using $L_2$ distance. We ran the SVM-KNN algorithm with $K=\{1,3,5,10,30,80,110,150\}$ on the two datsets. We also randomly sampled 7,291 images from the MNIST dataset and ran SVM-KNN to evaluate the difference between MNIST and USPS. (Note that 7,291 is the number of training images in the USPS dataset.) We also ran experiments on the USPS dataset using the tangent distance kernel and MNIST dataset using the RBF kernel. Results and analysis follow in following sections.
 
 \subsection{KNN}
 
-We implemented and ran the standard KNN algorithm on both MNIST and USPS datasets on $K=\{1,3,5,10,30,80\}$. Results are shown in the second columns of Table 1 and Table 2.
+We implemented and ran the standard KNN algorithm on both MNIST and USPS datasets on $K=\{1,3,5,10,30,80\}$. Results are shown in Table 1 and Table 2.
 
 \subsection{SVM-KNN}
 
-We modified the KNN algorithm to use a unanimous voting scheme and integrated scikit-learn's SVM package. For the first part of our experiments, we used a linear kernel and broke ties by choosing the lower index. For the KNN portion of the algorithm, we used $K=\{1,3,5,10,30,80,110,150\}$. Reasons for using larger $K$ values (110 and 150) are elaborated in the next section. Results are shown in the first columns of Table 1 and Table 2.
+We modified the KNN algorithm to use a unanimous voting scheme and integrated {\tt scikit-learn}'s SVM package. For the first part of our experiments, we used a linear kernel and broke ties by choosing the lower index. For the KNN portion of the algorithm, we used $K=\{1,3,5,10,30,80,110,150\}$. Reasons for using larger $K$ values (110 and 150) are elaborated in the next section. Results are shown in Table 1 and Table 2.
 
 To compare MNIST and USPS, we randomly sampled the same number of training images from the MNIST dataset as the USPS dataset (7,291 images) and ran SVM-KNN on this sampled dataset. Results are shown in Table 3 and Figure 3.
 
 \subsection{Tangent Distance}
 
-Tangent distance is the minimal distance between the linear surfaces that best approximate the two non-linear manifolds $S_P$ and $S_E$ as defined in [10]. The distance in the implementation was calculated from seven transformations of the images, which includes shifting, deformation, rotation, and scaling. After the distance is calculated, it is used in the SVM by applying a kernel trick:
+Tangent distance is the minimal distance between the linear surfaces that best approximate the two non-linear manifolds from each image as defined in [10]. The distance in the implementation was calculated from seven transformations of the images, which includes shifting, deformation, rotation, and scaling. After the distance is calculated, it is used in the SVM by applying a kernel trick:
 
 $$K(x,y)=<x,y>=\frac{1}{2}(d(x,0)+d(y,0)-d(x,y))$$
 
@@ -177,11 +179,11 @@ Based on the approach taken by [7], we ran SVM-KNN using RBF kernel on the MNIST
 
 The Radial Basis Function (RBF) Kernel is a kernel in the form of a Gaussian (radial basis) function form. The RBF kernel is defined as 
 
-$$K(x, x') = exp\left(-\frac{||x-x'||^2}{2\sigma^2}\right)$$
+$$K(x, y) = exp\left(-\frac{||x-y||^2}{2\sigma^2}\right)$$
 
-where $\gamma$ is sets the spread of the kernel.
+where $\gamma=\frac{1}{2\sigma^2}$ sets the spread of the kernel.
 
-We used {\tt scikit-learn}'s SVC module with the {\tt kernel=}''{\tt rbf}'' option and ran experiments with $K=\{1,3,5,10,30,80\}$. Results are shown in Table 3, plotted in Figure 3.
+We used {\tt scikit-learn}'s {\tt SVC} module with the {\tt kernel=}''{\tt rbf}'' option and ran experiments with $K=\{1,3,5,10,30,80\}$. Results are shown in Table 3, plotted in Figure 3.
 
 \begin{figure}[t!]
   \centering
@@ -199,9 +201,9 @@ We used {\tt scikit-learn}'s SVC module with the {\tt kernel=}''{\tt rbf}'' opti
 
 \subsection{KNN on MNIST and USPS}
 
-We can see from Figures 1 and 2 that as $K$ increases, the accuracy decreases using the standard KNN algorithm. As $K$, the algorithm includes an increased number of irrelevant samples that are members of different classes in the neighborhood. Therefore, these irrelevant, incorrect neighbors disrupt the voting and cause incorrect predictions. Naturally, with more samples in the neighborhood that are further away from our input instance, we get more instances that are not in the same class as our input instance. We get lower accuracy as a result.
+We can see from Figures 1 and 2 that as $K$ increases, the accuracy decreases using the standard KNN algorithm. As $K$ increases, the algorithm includes an increased number of irrelevant samples that are members of different classes in the neighborhood. Therefore, these irrelevant, incorrect neighbors disrupt the voting and cause incorrect predictions. Naturally, with more samples in the neighborhood that are further away from our input instance, we get more instances that are not in the same class as our input instance. We get lower accuracy as a result.
 
-We perform slightly better on the MNIST dataset than on the USPS dataset. The authors in [1] attribute this to the fact that the USPS dataset is naturally harder. The human error rate on the USPS dataset is 2.5$\%$ according to [4]. We empirically verified that this is most likely the case. We discuss more on this in Section 6.3.
+We perform slightly better on the MNIST dataset than on the USPS dataset. The authors in [1] attribute this to the fact that the USPS dataset is naturally harder. The human error rate on the USPS dataset is 2.5$\%$ according to [4]. 
 
 \begin{table}
 \begin{center}
@@ -229,17 +231,23 @@ We perform slightly better on the MNIST dataset than on the USPS dataset. The au
 
 \subsection{SVM-KNN on MNIST and USPS}
 
-In running the SVM-KNN, we can run into three different cases: 1) The KNN algorithm reaches an incorrect unanimous vote, and the algorithm outputs that incorrect result; 2) The KNN algorithm reaches a correct unanimous vote, and the algorithm outputs that correct result; 3) The KNN algorithm does not agree unanimously and seeks help from the SVM. For the third case, there are four subcases based on the combinations of the KNN majority vote being correct or incorrect and SVM being correct or incorrect. Two of those cases (``KNN majority correct $\rightarrow$ SVM incorrect'' and ``KNN majority incorrect $\rightarrow$ SVM correct'') are of interest to us. The case ``KNN majority correct $\rightarrow$ SVM correct'' is trivial, and the case ``KNN majority incorrect $\rightarrow$ SVM incorrect'' cannot be helped by the SVM-KNN algorithm. This is due to either the limits of this algorithm or the presence of illegible handwriting that caused the human error rates.
+In running the SVM-KNN, we can run into three different cases: (1) The KNN algorithm reaches an incorrect unanimous vote, and the algorithm outputs that incorrect result; (2) The KNN algorithm reaches a correct unanimous vote, and the algorithm outputs that correct result; (3) The KNN algorithm does not agree unanimously and seeks help from the SVM. For the third case, there are four subcases based on the combinations of the KNN majority vote being correct or incorrect and SVM being correct or incorrect. Two of those cases (``KNN majority correct $\rightarrow$ SVM incorrect'' and ``KNN majority incorrect $\rightarrow$ SVM correct'') are of interest to us. The case ``KNN majority correct $\rightarrow$ SVM correct'' is trivial, and the case ``KNN majority incorrect $\rightarrow$ SVM incorrect'' cannot be helped by the SVM-KNN algorithm. This is due to either the limits of this algorithm or the presence of illegible handwriting that caused the human error rates.
 
-We noticed empirically that the first case does not happen very often. It may occur occasionally when the sample image contains messy handwriting. The second case happened most frequently.
+We noticed empirically that (1) does not happen very often. It may occur occasionally when the sample image contains messy handwriting.
 
-The third case was where we saw interesting results. Previously in the KNN experiment, the KNN algorithm reached a majority vote on the wrong classification occasionally. However, for many of those cases, the SVM-KNN algorithm outputted the correct classification nonetheless. For example, for one particular instance, KNN outputted a prediction of ``4'' even though the correct label was ``8'' because the majority of the sample's neighbors were of class ``4''. However, when this sample was run on the SVM-KNN, the algorithm outputted ``8''. We conclude that this is due to the fact that the SVM uses a max-margin principle. Therefore, although a particular instance may have many neighbors that are not of the same type, the \textit{max-margin}-ed decision boundary learned by the SVM will correct this error.
+\begin{figure}[t!]
+  \centering
+  \includegraphics[keepaspectratio, width=0.3\textwidth]{mnist_error.png}
+  \caption{Examples of errors between ``4'' and ``9''.}
+\end{figure}
+
+Case (3) was where we saw interesting results. Previously in the KNN experiment, the KNN algorithm reached a majority vote on the wrong classification occasionally. However, for many of those cases, the SVM-KNN algorithm outputted the correct classification nonetheless. For example, for one particular instance, KNN outputted a prediction of ``4'' even though the correct label was ``9'' because the majority of the sample's neighbors were of class ``4'' (Figure 4). However, when this sample was run on SVM-KNN, the algorithm outputted ``9''. We conclude that this is due to the fact that SVM uses a max-margin principle. Therefore, although a particular instance may have many neighbors that are not of the same type, the \textit{max-margin}-ed decision boundary learned by the SVM will correct this error.
 
 However, we also contemplated about the case where the KNN would have been correct by majority vote, but the SVM outputted the wrong classification. We conclude that such cases may happen when our test instance is very close to a support vector on the other side of the decision boundary. Therefore, although the majority of its neighbors are of its own type, SVM may give a wrong prediction.
 
-Furthermore, we noticed that the authors in [1] provided results for only a single $K$ value for each of the experiments. In particular, they used $K=80$ for SVM-KNN and $K=3$ for KNN on MNIST,  and $K=10$ for SVM-KNN and $K=3$ for KNN on USPS. We decided to run the standard KNN and SVM-KNN on various $K$ values for both datasets. We first tested with $K$ values of 1, 3, 5, 10, 30, 80 for both datasets. We were able to observe a pyramid shaped SVM-KNN accuracy plot for the USPS data with $K=10$ serving as the peak. (Figure 2) However, the SVM-KNN accuracy for the MNIST dataset required even larger values of $K$ to observe this \textit{pyramid} behavior. We extended the $K$ testing range to include $K=110$ and $K=150$ to observe declinding accuracy on the MNIST dataset.
+Furthermore, we noticed that the authors in [1] provided results for only a single $K$ value for each of the experiments. In particular, they used $K=80$ for SVM-KNN and $K=3$ for KNN on MNIST,  and $K=10$ for SVM-KNN and $K=3$ for KNN on USPS. We decided to run the standard KNN and SVM-KNN on various $K$ values for both datasets. We first tested with $K$ values of 1, 3, 5, 10, 30, 80 for both datasets. We were able to observe a pyramid shaped SVM-KNN accuracy plot for the USPS data with $K=10$ serving as the peak (Figure 2). However, the SVM-KNN accuracy for the MNIST dataset required even larger values of $K$ to observe this \textit{pyramid} behavior. We extended the $K$ testing range to include $K=110$ and $K=150$ to observe declinding accuracy on the MNIST dataset.
 
-We can observe from the SVM-KNN result plots in Figure 1, Figure 2, and Figure 3 that the SVM-KNN accuracy performance increases with larger values of $K$ in the beginning and decreases after a peak at a certain $K$ value. We concluded that the reason the SVM-KNN improves at first is that the SVM can learn with more helpful samples (i.e. neighbors chosen by the KNN algorithm). However, with extremely large values of $K$, the KNN algorithm hands the SVM algorithm a neighborhood with many unhelpful instances that create noise and thus disrupt the SVM from correctly constructing the decision boundary. Therefore, we get higher error rates as $K$ keeps on increasing beyond a certain threshold.
+We can observe from the SVM-KNN result plots in Figures 1, 2, and 3 that the SVM-KNN accuracy performance increases with larger values of $K$ in the beginning and decreases after a peak at a certain $K$ value. We conjecture that the reason the SVM-KNN improves at first is that the SVM can learn with more helpful samples (i.e. neighbors chosen by the KNN algorithm). However, with extremely large values of $K$, the KNN algorithm hands the SVM algorithm a neighborhood with many outliers from other labels that create noise and thus disrupt the SVM from correctly constructing the decision boundary. Therefore, we get higher error rates as $K$ keeps on increasing beyond a certain threshold.
  
 \subsection{SVM-KNN on 7,291 Sampled MNIST}
 
@@ -252,7 +260,7 @@ We were able to observe that the MNIST 7291 dataset displayed the \textit{pyrami
 \begin{tabular}{|l|r|r|}
 \hline \bf K & \bf USPS (SVM-KNN) \\ \hline
 1 & 0.9586  \\
-3 & 0.9621 \\
+3 & \textbf{0.9621} \\
 5 & 0.9606 \\
 10 & 0.9601 \\
 30 & 0. \\
@@ -271,7 +279,7 @@ We were able to observe that the MNIST 7291 dataset displayed the \textit{pyrami
 %%%%%%%%%%%%%%( 3/4 )%%%%%%%%%%%%%%%%
 \subsection{Tangent Distance SVM-KNN on USPS}
 
-On the USPS dataset, we also ran SVM-KNN, using \textbf{Algorithm 2} with a more ''accurate'' distance, the tangent distance. The experiments were performed with $K = \{1, 3, 5, 10\}$. Experiment with $K = 1$, which does not involve SVM, was performed as well since the nearest neighbor from $L_2$ distance may differ from that of tangent distance. Results are shown in Table 4 and Figure 4.
+On the USPS dataset, we also ran SVM-KNN, using \textbf{Algorithm 2} with a more ''accurate'' distance, the tangent distance. The experiments were performed with $K = \{1, 3, 5, 10\}$. Experiment with $K = 1$, which does not involve an SVM, was performed as well since the nearest neighbor from $L_2$ distance may differ from that of tangent distance. Results are shown in Table 4 and Figure 5.
 
 Highest accuracy was achieved at $K=3$ with an error rate of 3.79\%, performing better than any of the experiments using $L_2$ distance, although lower than those of [1]. One possibility for the cause may be the smoothening of the images mentioned in [1].
 
@@ -279,9 +287,9 @@ Highest accuracy was achieved at $K=3$ with an error rate of 3.79\%, performing 
 
 \subsection{RBF Kernel SVM-KNN on MNIST}
 
-The benefits of using the RBF kernel are as follow. First, it is a stationary kernel, meaning that the kernel is invariant to translation. For instance, the RBF kernel will output the same value for $K(x,x')$ as it would for $K(x+\lambda, x'+\lambda)$, where $\lambda$ is any constant valued vector with the same dimension as $x$ and $x'$. Second, the scaling by $\gamma$ occurs by the same amount in all directions. In other words, it is isotropic. Third, the RBF kernel is infinitely smooth.
+The benefits of using the RBF kernel are as follow. First, it is a stationary kernel, meaning that the kernel is invariant to translation. For instance, the RBF kernel will output the same value for $K(x,y)$ as it would for $K(x+\lambda, y+\lambda)$, where $\lambda$ is any constant valued vector with the same dimension as $x$ and $y$. Second, the scaling by $\gamma$ occurs by the same amount in all directions. In other words, it is isotropic. Third, the RBF kernel is infinitely smooth.
 
-However, nonlinear kernels such as the RBF kernel can be slow since we need to evaluate kernel products for each support vector. This problem may be mitigated by the SVM-KNN algorithm since our SVM is given a subset of size $K$ of the entire dataset.
+However, nonlinear kernels such as the RBF kernel can be slow since we need to evaluate kernel products for each support vector. This problem may be mitigated by the SVM-KNN algorithm since our SVM is given a subset of size $K$ of the entire dataset, and we consider $K$ to be small [1, 7].
 
 According to the approach mentioned in [7], running an SVM (not SVM-KNN) using the RBF kernel yields better accuracy. However, as mentioned by the authors of [7], this comes with a cost of extremely high computational expense, and we were not able to run the SVM on the entire dataset of 60,000 training and 10,000 test images in MNIST. We ran the SVM-KNN with RBF kernel instead. Results are shown in Table 3 and Figure 3.
 
@@ -294,13 +302,13 @@ The experiments we performed took extremely long to run. While KNN takes almost 
 %%%%%%%%%%%%%%( 4/4 )%%%%%%%%%%%%%%%%
 \subsection{Analytical Difficulty}
 
-Some of the more ``accurate'' distance functions were beyond the scope of our project. Shape context required sampling points from the Canny edges, bipartite graph matching $(O(N^3))$, scaling of the image (ex: 28x28 to 70x70 for MNIST) and computing multiple distances, such as Appearance cost, Shape Context cost, and Transformation cost. Computing tangent distance on large data also caused memory issues, thus experiments with tangent distance on MNIST was not performed.
+Some of the more ``accurate'' distance functions were beyond the scope of our project. Shape context required sampling points from the Canny edges, bipartite graph matching $(O(N^3))$, scaling of the image (e.g. 28x28 to 70x70 for MNIST [1]) and computing multiple distances, such as Appearance cost, Shape Context cost, and Transformation cost. Computing tangent distance on large data also caused memory issues, thus experiments with tangent distance on MNIST was not performed.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusion}
 
-In this project, we explored the SVM-KNN algorithm on several datasets and compared the results with the KNN algorithm. We experimented with the SVM-KNN and KNN on MNIST and USPS datasets of handwritten digits on various $K$ values and sample sizes. We conclude that the standard KNN algorithm performs worse with increasing values of $K$ while the SVM-KNN shows a pyramid-ing behavior with increasing values of $K$. The incorporation of SVM into the KNN algorithm as a subpattern improves the speed and accuracy in visual object recognition tasks for handwritten digit images. Future work needs to explore more on this algorithm's effectiveness on more complex image datasets such as the Caltech 101 [3], Caltech 256 [8], and ImageNet \footnote{http://image-net.org/index}.
+In this project, we explored the SVM-KNN algorithm on several datasets and compared the results with the KNN algorithm. We experimented with the SVM-KNN and KNN on MNIST and USPS datasets of handwritten digits on various $K$ values and sample sizes. We conclude that the standard KNN algorithm performs worse with increasing $K$ while the SVM-KNN shows a \textit{pyramid}-ing behavior with increasing $K$. The incorporation of SVM into the KNN algorithm as a subpattern improves the speed and accuracy in visual object recognition tasks for handwritten digit images. Future work needs to explore more on this algorithm's effectiveness on more complex image datasets such as the Caltech 101 [3], Caltech 256 [8], and ImageNet \footnote{http://image-net.org/index}.
 
 \section{Comparison to Proposal}
 

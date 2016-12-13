@@ -32,9 +32,6 @@ for line in predictions:
 # data.close()
 predictions.close()
 
-# print predicted_labels
-# print true_labels
-
 if len(predicted_labels) != len(true_labels):
     print 'Number of lines in two files do not match.'
     sys.exit()
