@@ -168,7 +168,7 @@ Unlike [1]'s implementation, the tangents were calculated from raw images withou
 
 %%%%%%%%%%%%%%( 2/4 )%%%%%%%%%%%%%%%%
 
-For the USPS dataset, we also ran \textbf{Algorithm 2} to observe the effects of XXXXXXXXXXX XX XXXXXXXXXXXXXX XXXXXXXXX XXXXXXXXXXX.
+For the USPS dataset, we also ran \textbf{Algorithm 2} to observe the effect of finding more 'accurate' neighbors, possibly with the same label as the test sample, through tangent distance matching.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{RBF Kernel}
@@ -250,7 +250,9 @@ We were able to observe that the MNIST 7291 dataset displayed the \textit{pyrami
 %%%%%%%%%%%%%%( 3/4 )%%%%%%%%%%%%%%%%
 \subsection{Tangent Distance SVM-KNN on USPS}
 
-Text
+On the USPS zipcode dataset, we also ran SVM-KNN, using algorithm 2 that involves a more 'accurate' distance, the tangent distance. The experiments were performed with values of $K = 1, 3, 5, 10$. Experiment with $K = 1$, which does not involve SVM, was performed as well since the nearest neighbor from $L_2$ distance may differ from that of tangent distance. The results are as follows:
+\\
+Highest accuracy was achieved at $K=3$ with the error rate of 3.79\%, performing better than the results from any of the experiments using $L_2$ distance, although lower than those of [1]. One possibility for the cause may be the 'smoothening' of the images mentioned in [1].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -269,9 +271,9 @@ According to the approach mentioned in [7], running an SVM (not SVM-KNN) using t
 The experiments we performed for this project took extremely long to run. While the KNN algorithm takes almost no training time, it takes very long during testing [7]. If we had used an external library's KNN algorithm (of which there are many: {\tt OpenCV}, {\tt scikit-learn}, etc.), the running time might have gone down. However, we needed to use our own code for our project because 1) we needed to change the voting scheme to be unanimous; 2) we needed to incorporate the SVM as a subprocedure. Moreover, because each test run took so long to complete, it was harder to find bugs in our program. And analysis of results from running our algorithm under a specific configuration on various $K$ values took very long to produce complete output.
 
 %%%%%%%%%%%%%%( 4/4 )%%%%%%%%%%%%%%%%
-\subsection{Difficulty 2}
+\subsection{Analytical Difficulty}
 
-Text
+Some of the more 'accurate' distance functions were beyond the scope of our project. Shape contest required sampling points from the Canny edges, bipartite graph matching $(O(N^3))$, scaling of the image (ex: 28x28 to 70x70 for MNIST) and computing multiple distances, such as Appearance cost, Shape Context cost, and Transformation cost. Computing tangent distance on large data also caused memory issues, thus experiments with tangent distance on MNIST was not performed.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

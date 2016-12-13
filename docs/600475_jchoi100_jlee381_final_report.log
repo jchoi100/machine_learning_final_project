@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/W32TeX) (preloaded format=pdflatex 2015.2.10)  12 DEC 2016 18:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/W32TeX) (preloaded format=pdflatex 2015.2.10)  12 DEC 2016 21:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -70,7 +70,11 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
 )
-No file 600475_jchoi100_jlee381_final_report.aux.
+(./600475_jchoi100_jlee381_final_report.aux
+
+LaTeX Warning: Label `knn-mnist' multiply defined.
+
+)
 \openout1 = `600475_jchoi100_jlee381_final_report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
@@ -86,7 +90,7 @@ LaTeX Font Info:    ... okay on input line 30.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
 LaTeX Font Info:    ... okay on input line 30.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 30.
-(c:/texlive/2014/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+ (c:/texlive/2014/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 (c:/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
@@ -199,99 +203,95 @@ Underfull \hbox (badness 10000) in paragraph at lines 67--68
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 80--81
+
+ []
+
 [2]
-Underfull \hbox (badness 1348) in paragraph at lines 92--93
+Underfull \hbox (badness 1348) in paragraph at lines 107--108
 []\OT1/ptm/m/n/10.95 For the SVM por-tion of the code, we used
  []
 
 
-Overfull \hbox (1.15393pt too wide) in paragraph at lines 96--96
+Overfull \hbox (1.15393pt too wide) in paragraph at lines 111--111
 [][]\OT1/ptm/m/n/9 https://github.com/jchoi100/machine[]learning[]final[]projec
 t| 
  []
 
 
-Overfull \hbox (10.25468pt too wide) in paragraph at lines 100--112
+Overfull \hbox (10.25468pt too wide) in paragraph at lines 115--127
  [] 
  []
 
 
-Overfull \hbox (4.7797pt too wide) in paragraph at lines 118--128
+Overfull \hbox (4.7797pt too wide) in paragraph at lines 133--143
  [] 
  []
 
 
-Underfull \hbox (badness 1715) in paragraph at lines 144--145
-[]\OT1/ptm/m/n/10.95 In or-der to com-pare the MNIST and USPS
- []
+Underfull \vbox (badness 1668) has occurred while \output is active []
 
-[3] <mnist_full.png, id=19, 468.24937pt x 285.56688pt>
+ [3]
+<mnist_full.png, id=20, 468.24937pt x 285.56688pt>
 File: mnist_full.png Graphic file (type png)
  <use mnist_full.png>
-Package pdftex.def Info: mnist_full.png used on input line 178.
+Package pdftex.def Info: mnist_full.png used on input line 188.
 (pdftex.def)             Requested size: 234.87749pt x 143.24496pt.
 
-Overfull \hbox (7.22688pt too wide) in paragraph at lines 178--179
+Overfull \hbox (7.22688pt too wide) in paragraph at lines 188--189
  [][] 
  []
 
-<usps_full.png, id=21, 468.24937pt x 285.56688pt>
+<usps_full.png, id=22, 468.24937pt x 285.56688pt>
 File: usps_full.png Graphic file (type png)
  <use usps_full.png>
-Package pdftex.def Info: usps_full.png used on input line 184.
+Package pdftex.def Info: usps_full.png used on input line 194.
 (pdftex.def)             Requested size: 234.87749pt x 143.24496pt.
 
-Overfull \hbox (7.22688pt too wide) in paragraph at lines 184--185
+Overfull \hbox (7.22688pt too wide) in paragraph at lines 194--195
  [][] 
  []
 
-[4 <./mnist_full.png> <./usps_full.png>]
-<mnist_7291.png, id=30, 468.24937pt x 285.56688pt>
-File: mnist_7291.png Graphic file (type png)
- <use mnist_7291.png>
-Package pdftex.def Info: mnist_7291.png used on input line 228.
-(pdftex.def)             Requested size: 234.87749pt x 143.24496pt.
+[4 <./mnist_full.png> <./usps_full.png>] [5]
+<mnist_rbf_7291.png, id=34, 468.75125pt x 284.06125pt>
+File: mnist_rbf_7291.png Graphic file (type png)
 
-Overfull \hbox (7.22688pt too wide) in paragraph at lines 228--229
+<use mnist_rbf_7291.png>
+Package pdftex.def Info: mnist_rbf_7291.png used on input line 246.
+(pdftex.def)             Requested size: 234.87749pt x 142.33366pt.
+
+Overfull \hbox (7.22688pt too wide) in paragraph at lines 246--247
  [][] 
  []
 
-[5] <mnist_full_rbf.png, id=35, 468.24937pt x 285.56688pt>
-File: mnist_full_rbf.png Graphic file (type png)
 
-<use mnist_full_rbf.png>
-Package pdftex.def Info: mnist_full_rbf.png used on input line 259.
-(pdftex.def)             Requested size: 234.87749pt x 143.24496pt.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Overfull \hbox (7.22688pt too wide) in paragraph at lines 259--260
- [][] 
- []
+ [6 <./mnist_rbf_7291.png>]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 289.
 
-[6 <./mnist_7291.png> <./mnist_full_rbf.png>]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 293.
-
-
-(c:/texlive/2014/texmf-dist/tex/latex/psnfss/omsptm.fd
+ (c:/texlive/2014/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 293.
- [7] [8
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 289.
 
-]
-(./600475_jchoi100_jlee381_final_report.aux)
+[7] [8
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+] (./600475_jchoi100_jlee381_final_report.aux)
+
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 1713 strings out of 493109
- 24930 string characters out of 6138587
- 89480 words of memory out of 5000000
- 5139 multiletter control sequences out of 15000+600000
+ 1710 strings out of 493109
+ 24923 string characters out of 6138587
+ 89888 words of memory out of 5000000
+ 5135 multiletter control sequences out of 15000+600000
  28345 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,9n,23p,1010b,256s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,9n,23p,1013b,256s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2014/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2014/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2014/texmf-dist/fonts/type1
@@ -303,11 +303,11 @@ e/2014/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/texlive/2014/texmf-dis
 t/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2014/texmf-dist/fonts/type1/urw/
 times/utmr8a.pfb><c:/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 
-Output written on 600475_jchoi100_jlee381_final_report.pdf (8 pages, 236838 byt
+Output written on 600475_jchoi100_jlee381_final_report.pdf (8 pages, 226307 byt
 es).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
+ 83 PDF objects out of 1000 (max. 8388607)
  55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
