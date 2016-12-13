@@ -60,7 +60,7 @@ MNIST \footnote{http://yann.lecun.com/exdb/mnist/} (Mixed National Institute of 
 
 \subsection{USPS}
 
-The USPS dataset constructed in [9] is a dataset of handwritten digits with 7,291 training images and 2,007 testing images. The dataset was obtained from the scanning of handwritten digits from envelopes by the U.S. Postal Service. The images in this dataset have been deslanted and size normalized from the original images. Each image is 16x16 grayscale.
+The USPS dataset constructed in [9] is a dataset of handwritten digits with 7,291 training and 2,007 testing images. The dataset was obtained from the scanning of handwritten digits from envelopes by the U.S. Postal Service. The images in this dataset have been deslanted and size normalized from the original images. Each image is 16x16 grayscale.
 
 \section{SVM-KNN Algorithm}
 
@@ -168,7 +168,7 @@ Unlike [1]'s implementation, the tangents were calculated from raw images withou
 
 %%%%%%%%%%%%%%( 2/4 )%%%%%%%%%%%%%%%%
 
-For the USPS dataset, we also ran \textbf{Algorithm 2} to observe the effect of finding more 'accurate' neighbors, possibly with the same label as the test sample, through tangent distance matching.
+For the USPS dataset, we also ran \textbf{Algorithm 2} to observe the effect of finding more ``accurate'' neighbors, possibly with the same label as the test sample, through tangent distance matching.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{RBF Kernel}
@@ -221,6 +221,12 @@ We perform slightly better on the MNIST dataset than on the USPS dataset. The au
 \caption{\label{knn-mnist} SVM-KNN Accuracy on MNIST 7291 and RBF.}
 \end{table}
 
+\begin{figure}[t!]
+  \centering
+  \includegraphics[keepaspectratio, width=0.5\textwidth]{mnist_rbf_7291.png}
+  \caption{Plots of MNIST 7291 and MNIST RBF results.}
+\end{figure}
+
 \subsection{SVM-KNN on MNIST and USPS}
 
 In running the SVM-KNN, we can run into three different cases: 1) The KNN algorithm reaches an incorrect unanimous vote, and the algorithm outputs that incorrect result; 2) The KNN algorithm reaches a correct unanimous vote, and the algorithm outputs that correct result; 3) The KNN algorithm does not agree unanimously and seeks help from the SVM. For the third case, there are four subcases based on the combinations of the KNN majority vote being correct or incorrect and SVM being correct or incorrect. Two of those cases (``KNN majority correct $\rightarrow$ SVM incorrect'' and ``KNN majority incorrect $\rightarrow$ SVM correct'') are of interest to us. The case ``KNN majority correct $\rightarrow$ SVM correct'' is trivial, and the case ``KNN majority incorrect $\rightarrow$ SVM incorrect'' cannot be helped by the SVM-KNN algorithm. This is due to either the limits of this algorithm or the presence of illegible handwriting that caused the human error rates.
@@ -241,18 +247,33 @@ In order to be able to make qualitative comparisons of the MNIST and USPS datase
 
 We were able to observe that the MNIST 7291 dataset displayed the \textit{pyramid}-ing behavior at $K=80\dots 110$, which is fairly close to the \textit{pyramid}-ing $K$ value for the full MNIST dataset. Therefore, we were able to see that the size of the training dataset had a small effect in influencing the accuracy of the SVM-KNN on the entire datasets and also on the \textit{pyramid}-ing behavior.
 
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|r|r|}
+\hline \bf K & \bf USPS (SVM-KNN) \\ \hline
+1 & 0.9586  \\
+3 & 0.9621 \\
+5 & 0.9606 \\
+10 & 0.9601 \\
+30 & 0. \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{knn-mnist} SVM-KNN Accuracy using Tangent Distance.}
+\end{table}
+
 \begin{figure}[t!]
   \centering
-  \includegraphics[keepaspectratio, width=0.5\textwidth]{mnist_rbf_7291.png}
-  \caption{Plots of MNIST 7291 and MNIST RBF results.}
+  \includegraphics[keepaspectratio, width=0.5\textwidth]{usps_td.png}
+  \caption{USPS SVM-KNN Tangent Distance results.}
 \end{figure}
 
 %%%%%%%%%%%%%%( 3/4 )%%%%%%%%%%%%%%%%
 \subsection{Tangent Distance SVM-KNN on USPS}
 
-On the USPS zipcode dataset, we also ran SVM-KNN, using algorithm 2 that involves a more 'accurate' distance, the tangent distance. The experiments were performed with values of $K = 1, 3, 5, 10$. Experiment with $K = 1$, which does not involve SVM, was performed as well since the nearest neighbor from $L_2$ distance may differ from that of tangent distance. The results are as follows:
-\\
-Highest accuracy was achieved at $K=3$ with the error rate of 3.79\%, performing better than the results from any of the experiments using $L_2$ distance, although lower than those of [1]. One possibility for the cause may be the 'smoothening' of the images mentioned in [1].
+On the USPS dataset, we also ran SVM-KNN, using \textbf{Algorithm 2} with a more ''accurate'' distance, the tangent distance. The experiments were performed with $K = \{1, 3, 5, 10\}$. Experiment with $K = 1$, which does not involve SVM, was performed as well since the nearest neighbor from $L_2$ distance may differ from that of tangent distance. Results are shown in Table 4 and Figure 4.
+
+Highest accuracy was achieved at $K=3$ with an error rate of 3.79\%, performing better than any of the experiments using $L_2$ distance, although lower than those of [1]. One possibility for the cause may be the smoothening of the images mentioned in [1].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -273,7 +294,7 @@ The experiments we performed for this project took extremely long to run. While 
 %%%%%%%%%%%%%%( 4/4 )%%%%%%%%%%%%%%%%
 \subsection{Analytical Difficulty}
 
-Some of the more 'accurate' distance functions were beyond the scope of our project. Shape contest required sampling points from the Canny edges, bipartite graph matching $(O(N^3))$, scaling of the image (ex: 28x28 to 70x70 for MNIST) and computing multiple distances, such as Appearance cost, Shape Context cost, and Transformation cost. Computing tangent distance on large data also caused memory issues, thus experiments with tangent distance on MNIST was not performed.
+Some of the more ``accurate'' distance functions were beyond the scope of our project. Shape context required sampling points from the Canny edges, bipartite graph matching $(O(N^3))$, scaling of the image (ex: 28x28 to 70x70 for MNIST) and computing multiple distances, such as Appearance cost, Shape Context cost, and Transformation cost. Computing tangent distance on large data also caused memory issues, thus experiments with tangent distance on MNIST was not performed.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -297,7 +318,6 @@ In this project, we explored the SVM-KNN algorithm on several datasets and compa
 \begin{itemize}
 \item Use shape context instead of $L_2$ to compute distance matrix to feed to Kernel SVM when running SVM-KNN on MNIST. $\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Not Done)}
 
-\textit{(The computations involved were intractable. The authors of the original paper proposed scaling up the input image size from 28x28 to 70x70 on a dataset of 60,000 training images and 10,000 test images.)}
 \item Use tangent distance instead of $L_2$ to compute distance matrix to feed to Kernel SVM in running SVM-KNN on USPS. $\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>\>$\textbf{(Done)}
 \end{itemize}
 
